@@ -36,8 +36,6 @@
 #define OSC_OUT_PORT 9000
 #define OSC_IN_PORT 8000
 
-#define EDIT_UI_TIME 3000
-
 // typedefs
 typedef BaseController *BaseControllerPtr;
 typedef Luboid *LuboidPtr;
@@ -81,7 +79,7 @@ void setup() {
     // setup wire
     Wire.begin(D2, D1);
 
-    // setup leafs
+    // setup luboids
     installation.loadLuboids();
 
     // setup controllers
