@@ -1,7 +1,7 @@
 # Movement Detection
 # cansik @ bildspur 2018
 
-import sensor, image, pyb, os, time, math
+import sensor, image, pyb, os, time, utime, math
 
 sensor.reset()                      # Reset and initialize the sensor.
 sensor.set_pixformat(sensor.GRAYSCALE) # Set pixel format to RGB565 (or GRAYSCALE)
@@ -13,6 +13,9 @@ clock = time.clock()                # Create a clock object to track the FPS.
 # variables
 trigger_threshold = 5
 extra_fb = sensor.alloc_extra_fb(sensor.width(), sensor.height(), sensor.GRAYSCALE)
+red_led = pyb.LED(1)
+green_led = pyb.LED(2)
+blue_led = pyb.LED(3)
 
 # debug
 show_debug = True
@@ -37,6 +40,11 @@ min_distance = 150
 sensor.skip_frames(time = 2000) # Give the user time to get ready.
 extra_fb.replace(sensor.snapshot())
 
+def blink_led(led):
+    led.on()
+    utime.sleep_ms(200)
+    led.off()
+
 def distance(p1, p2):
     return math.sqrt(((p1[0]-p2[0])**2)+((p1[1]-p2[1])**2))
 
@@ -49,6 +57,9 @@ def trigger_movement(moving_objects):
 
             # only check x
             print("Trigger: %s" % ("Right" if direction[0] else "Left"))
+
+            # light up led
+            blink_led(red_led if direction[0] else blue_led)
 
             # delete object
             mo.is_dead = True
