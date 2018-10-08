@@ -51,7 +51,12 @@ def update_tracking(blobs, moving_objects):
             moving_objects.append(MovingObject(blob))
 
     # filter not updated and dead objects
-    moving_objects = filter(lambda x: x.updated and not x.is_dead, moving_objects)
+    alive_mos = [mo for mo in moving_objects if mo.updated and not mo.is_dead]
+
+    moving_objects.clear()
+    for mo in alive_mos:
+        moving_objects.append(mo)
+
 
 class MovingObject:
     def __init__(self, blob):
@@ -59,7 +64,7 @@ class MovingObject:
         self.has_triggered = False
         self.is_dead = False
         self.life = 1
-        self.updated = False
+        self.updated = True
 
     def check_match(self, blob, distance_threshold, area_threshold):
         d = distance([blob.cx(), blob.cy()], [self.blob.cx(), self.blob.cy()])
