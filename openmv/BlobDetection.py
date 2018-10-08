@@ -21,3 +21,4 @@ while(True):
         img.draw_cross(blob.cx(), blob.cy())
 
     print(clock.fps())
+
