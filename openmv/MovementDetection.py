@@ -14,6 +14,10 @@ clock = time.clock()                # Create a clock object to track the FPS.
 trigger_threshold = 5
 extra_fb = sensor.alloc_extra_fb(sensor.width(), sensor.height(), sensor.GRAYSCALE)
 
+# debug
+show_debug = True
+debug_color = (0, 0, 0)
+
 # blob detection
 blob_threshold = (5, 255)
 pixels_threshold = 250
@@ -29,6 +33,7 @@ last_frame_triggered = False
 min_life = 10
 min_distance = 150
 
+# start of  main
 sensor.skip_frames(time = 2000) # Give the user time to get ready.
 extra_fb.replace(sensor.snapshot())
 
@@ -125,18 +130,22 @@ while(True):
 
     # update blobs
     update_tracking(blobs, moving_objects)
-    print("MO's: %s" % (len(moving_objects)))
 
     # trigger if necessary
     trigger_movement(moving_objects)
 
     # display blobs debug info
-    for mo in moving_objects:
-        img.draw_arrow(mo.start_position[0], mo.start_position[1], mo.blob.cx(), mo.blob.cy())
-        img.draw_string(mo.blob.cx(), mo.blob.cy(), "%s" % (mo.moved_distance()))
+    if show_debug:
+        # show tracked mo's
+        img.draw_string(20, 20, "MO:%s" % (len(moving_objects)), scale=2, color=debug_color)
 
-        img.draw_rectangle(mo.blob.rect())
-        img.draw_cross(mo.blob.cx(), mo.blob.cy())
+        # show blobs and distance
+        for mo in moving_objects:
+            img.draw_arrow(mo.start_position[0], mo.start_position[1], mo.blob.cx(), mo.blob.cy())
+            img.draw_string(mo.blob.cx(), mo.blob.cy(), "%s" % (mo.moved_distance()))
+
+            img.draw_rectangle(mo.blob.rect())
+            img.draw_cross(mo.blob.cx(), mo.blob.cy())
 
 
     # update framebuffer
