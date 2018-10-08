@@ -35,5 +35,14 @@ while(True):
     print(clock.fps(), triggered) # Note: Your OpenMV Cam runs about half as fast while
     # connected to your computer. The FPS should increase once disconnected.
 
+    # send framebuffer to ide
+    # print(extra_fb.compressed_for_ide(), end="")
+
+    # find direction
+    if(triggered):
+        # detect blob an calculate new position
+        print("triggered")
+
+
     # update framebuffer
     extra_fb.replace(img)
