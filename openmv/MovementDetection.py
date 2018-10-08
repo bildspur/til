@@ -25,15 +25,30 @@ tracking_area_threshold = 100000 # remove tracking area as distinguisher
 moving_objects = []
 last_frame_triggered = False
 
+# trigger
+min_life = 10
+min_distance = 150
+
 sensor.skip_frames(time = 2000) # Give the user time to get ready.
 extra_fb.replace(sensor.snapshot())
 
 def distance(p1, p2):
     return math.sqrt(((p1[0]-p2[0])**2)+((p1[1]-p2[1])**2))
 
+# check if mos have to trigger
 def trigger_movement(moving_objects):
-    print("trigger")
+    for mo in moving_objects:
+        d = mo.moved_distance()
+        if d > min_distance and mo.life > min_life:
+            direction = mo.moved_direction()
 
+            # only check x
+            print("Trigger: %s" % ("Right" if direction[0] else "Left"))
+
+            # delete object
+            mo.is_dead = True
+
+# update mos with blobs
 def update_tracking(blobs, moving_objects):
     # reset flags
     for mo in moving_objects:
@@ -67,13 +82,19 @@ class MovingObject:
         self.is_dead = False
         self.life = 1
         self.updated = True
-        self.start_position = [blob.cx(), blob.cy()]
+        self.start_position = (blob.cx(), blob.cy())
 
-    def moved_distance():
-        return distance(start_position, [self.blob.cx(), self.blob.cy()])
+    def moved_distance(self):
+        return distance(self.start_position, (self.blob.cx(), self.blob.cy()))
+
+    # returns direction (true -> right, false -> left)
+    def moved_direction(self):
+        x = self.blob.cx() - self.start_position[0] > 0
+        y = self.blob.cy() - self.start_position[1] > 0
+        return (x, y)
 
     def check_match(self, blob, distance_threshold, area_threshold):
-        d = distance([blob.cx(), blob.cy()], [self.blob.cx(), self.blob.cy()])
+        d = distance((blob.cx(), blob.cy()), (self.blob.cx(), self.blob.cy()))
         a = abs(blob.area() - self.blob.area())
 
         if d < distance_threshold and a < area_threshold:
@@ -106,10 +127,13 @@ while(True):
     update_tracking(blobs, moving_objects)
     print("MO's: %s" % (len(moving_objects)))
 
+    # trigger if necessary
+    trigger_movement(moving_objects)
+
     # display blobs debug info
     for mo in moving_objects:
         img.draw_arrow(mo.start_position[0], mo.start_position[1], mo.blob.cx(), mo.blob.cy())
-        img.draw_string(mo.blob.cx(), mo.blob.cy(), "%s" % (mo.life))
+        img.draw_string(mo.blob.cx(), mo.blob.cy(), "%s" % (mo.moved_distance()))
 
         img.draw_rectangle(mo.blob.rect())
         img.draw_cross(mo.blob.cx(), mo.blob.cy())
