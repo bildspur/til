@@ -31,6 +31,9 @@ extra_fb.replace(sensor.snapshot())
 def distance(p1, p2):
     return math.sqrt(((p1[0]-p2[0])**2)+((p1[1]-p2[1])**2))
 
+def trigger_movement(moving_objects):
+    print("trigger")
+
 def update_tracking(blobs, moving_objects):
     # reset flags
     for mo in moving_objects:
@@ -64,6 +67,10 @@ class MovingObject:
         self.is_dead = False
         self.life = 1
         self.updated = True
+        self.start_position = [blob.cx(), blob.cy()]
+
+    def moved_distance():
+        return distance(start_position, [self.blob.cx(), self.blob.cy()])
 
     def check_match(self, blob, distance_threshold, area_threshold):
         d = distance([blob.cx(), blob.cy()], [self.blob.cx(), self.blob.cy()])
@@ -99,14 +106,13 @@ while(True):
     update_tracking(blobs, moving_objects)
     print("MO's: %s" % (len(moving_objects)))
 
-    # find direction by blob detection
-    if(triggered):
-        for blob in blobs:
-            img.draw_rectangle(blob.rect())
-            img.draw_cross(blob.cx(), blob.cy())
+    # display blobs debug info
+    for mo in moving_objects:
+        img.draw_arrow(mo.start_position[0], mo.start_position[1], mo.blob.cx(), mo.blob.cy())
+        img.draw_string(mo.blob.cx(), mo.blob.cy(), "%s" % (mo.life))
 
-            # send trigger with position
-            # print("%s: %s | %s (%s)" % (clock.fps(), blob.cx(), blob.cy(), blob.area()))
+        img.draw_rectangle(mo.blob.rect())
+        img.draw_cross(mo.blob.cx(), mo.blob.cy())
 
 
     # update framebuffer
