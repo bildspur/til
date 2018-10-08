@@ -1,5 +1,5 @@
 # Movement Detection
-# bildspur 2018
+# cansik @ bildspur 2018
 
 import sensor, image, pyb, os, time, math
 
@@ -44,7 +44,7 @@ def update_tracking(blobs, moving_objects):
         for mo in moving_objects:
             if mo.check_match(blob, tracking_distance_threshold, tracking_area_threshold):
                 is_used = True
-                continue
+                break
 
         # add to list if not used
         if not is_used:
@@ -57,11 +57,10 @@ def update_tracking(blobs, moving_objects):
     for mo in alive_mos:
         moving_objects.append(mo)
 
-
+# trackable object
 class MovingObject:
     def __init__(self, blob):
         self.blob = blob
-        self.has_triggered = False
         self.is_dead = False
         self.life = 1
         self.updated = True
@@ -69,8 +68,6 @@ class MovingObject:
     def check_match(self, blob, distance_threshold, area_threshold):
         d = distance([blob.cx(), blob.cy()], [self.blob.cx(), self.blob.cy()])
         a = abs(blob.area() - self.blob.area())
-
-        # print("D: %s\tA: %s" % (d, a))
 
         if d < distance_threshold and a < area_threshold:
             self.blob = blob
@@ -86,15 +83,12 @@ while(True):
     img = sensor.snapshot()
     extra_fb.difference(img)
 
+    # detect if there is a change
     hist = extra_fb.get_histogram()
-    # This code below works by comparing the 99th percentile value (e.g. the
-    # non-outlier max value against the 90th percentile value (e.g. a non-max
-    # value. The difference between the two values will grow as the difference
-    # image seems more pixels change.
     diff = hist.get_percentile(0.99).l_value() - hist.get_percentile(0.90).l_value()
     triggered = diff > trigger_threshold
 
-    # send framebuffer to ide
+    # send framebuffer to ide (not working atm)
     # print(extra_fb.compressed_for_ide(), end="")
 
     # detect blobs here and update extra_fb to use img for debug output
@@ -104,9 +98,6 @@ while(True):
     # update blobs
     update_tracking(blobs, moving_objects)
     print("MO's: %s" % (len(moving_objects)))
-
-    if(len(moving_objects) > 0):
-        print("first: updated = %s, life = %s" % (moving_objects[0].is_dead, moving_objects[0].life))
 
     # find direction by blob detection
     if(triggered):
