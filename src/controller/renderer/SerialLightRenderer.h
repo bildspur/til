@@ -10,7 +10,7 @@
 
 class SerialLightRenderer : public LightRenderer {
 private:
-
+    u_long counter = 0;
 
 public:
     explicit SerialLightRenderer(Installation *installation, float minBrightness = 0.0f, float maxBrightness = 1.0f);

@@ -51,10 +51,10 @@ auto ota = OTAController(DEVICE_NAME, OTA_PASSWORD, OTA_PORT);
 auto osc = OscController(OSC_IN_PORT, OSC_OUT_PORT);
 
 // renderer
-LightRenderer renderer = SerialLightRenderer(&installation);
+LightRenderer *renderer = new SerialLightRenderer(&installation);
 
 // scenes
-BaseScene starScene = StarScene(&installation);
+StarScene starScene = StarScene(&installation);
 
 auto sceneController = SceneController(&starScene);
 
@@ -63,7 +63,7 @@ BaseControllerPtr controllers[] = {
         &network,
         &ota,
         &osc,
-        &renderer,
+        renderer,
         &sceneController
 };
 
