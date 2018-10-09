@@ -3,7 +3,7 @@
 #define LED_PIN D6
 #define BAUD_RATE 115200
 
-SoftwareSerial openMVSerial(D5, D5, false, 256);
+SoftwareSerial openMVSerial(16, 17, false, 256);
 
 String inputString;
 
