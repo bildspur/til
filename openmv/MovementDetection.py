@@ -11,11 +11,14 @@ sensor.set_auto_whitebal(True)
 clock = time.clock()                # Create a clock object to track the FPS.
 
 # variables
-trigger_threshold = 5
 extra_fb = sensor.alloc_extra_fb(sensor.width(), sensor.height(), sensor.GRAYSCALE)
+uart = pyb.UART(3, 115200, timeout_char = 1000)
+
 red_led = pyb.LED(1)
 green_led = pyb.LED(2)
 blue_led = pyb.LED(3)
+
+trigger_threshold = 5
 
 # debug
 show_debug = True
@@ -60,6 +63,12 @@ def trigger_movement(moving_objects):
 
             # light up led
             blink_led(red_led if direction[0] else blue_led)
+
+            # send UART
+            if direction[0]:
+                uart.write("t:r")
+            else:
+                uart.write("t:l")
 
             # delete object
             mo.is_dead = True
