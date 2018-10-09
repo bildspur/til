@@ -12,6 +12,7 @@
 #include "controller/scene/BaseScene.h"
 #include "controller/scene/StarScene.h"
 #include "controller/scene/SceneController.h"
+#include "controller/renderer/SerialLightRenderer.h"
 
 // global
 #define INSTALLATION_DEBUG true
@@ -49,10 +50,11 @@ auto network = NetworkController(DEVICE_NAME, SSID_NAME, SSID_PASSWORD, WIFI_AP)
 auto ota = OTAController(DEVICE_NAME, OTA_PASSWORD, OTA_PORT);
 auto osc = OscController(OSC_IN_PORT, OSC_OUT_PORT);
 
-LightRenderer *renderer = nullptr; // todo: initialise light renderer
+// renderer
+LightRenderer renderer = SerialLightRenderer(&installation);
 
 // scenes
-auto starScene = StarScene(&installation);
+BaseScene starScene = StarScene(&installation);
 
 auto sceneController = SceneController(&starScene);
 
@@ -61,7 +63,7 @@ BaseControllerPtr controllers[] = {
         &network,
         &ota,
         &osc,
-        renderer,
+        &renderer,
         &sceneController
 };
 
