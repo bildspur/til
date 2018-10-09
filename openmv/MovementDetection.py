@@ -12,7 +12,7 @@ clock = time.clock()                # Create a clock object to track the FPS.
 
 # variables
 extra_fb = sensor.alloc_extra_fb(sensor.width(), sensor.height(), sensor.GRAYSCALE)
-uart = pyb.UART(3, 115200, timeout_char = 1000)
+uart = pyb.UART(3, 9600, timeout_char = 1000)
 
 red_led = pyb.LED(1)
 green_led = pyb.LED(2)
