@@ -62,7 +62,7 @@ auto sceneController = SceneController(&starScene);
 BaseControllerPtr controllers[] = {
         &network,
         &ota,
-        &osc,
+        //&osc,
         &renderer,
         &sceneController
 };
@@ -76,10 +76,7 @@ void setup() {
     Serial.begin(BAUD_RATE);
 
     // wait 3000 seconds for debugging
-    delay(3000);
-
-    // setup wire
-    // Wire.begin(D2, D1);
+    delay(5000);
 
     // setup luboids
     installation.loadLuboids();
@@ -90,7 +87,7 @@ void setup() {
     }
 
     // setup handlers
-    osc.onMessageReceived(handleOsc);
+    //osc.onMessageReceived(handleOsc);
 
     // add osc mdns
     MDNS.addService("_osc", "_udp", OSC_IN_PORT);
