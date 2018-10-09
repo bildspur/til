@@ -5,9 +5,7 @@
 #ifndef SILVA_LEAF_H
 #define SILVA_LEAF_H
 
-
-#include <c_types.h>
-#include <util/EasingValue.h>
+#include "../util/EasingValue.h"
 
 #define MIN_DISTANCE 0
 #define MAX_DISTANCE 255

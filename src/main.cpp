@@ -1,6 +1,6 @@
 #include <Arduino.h>
-#include <ESP8266mDNS.h>
 #include <Wire.h>
+#include <ESPmDNS.h>
 
 #include "controller/BaseController.h"
 #include "model/Luboid.h"
@@ -77,7 +77,7 @@ void setup() {
     delay(3000);
 
     // setup wire
-    Wire.begin(D2, D1);
+    // Wire.begin(D2, D1);
 
     // setup luboids
     installation.loadLuboids();
@@ -91,7 +91,7 @@ void setup() {
     osc.onMessageReceived(handleOsc);
 
     // add osc mdns
-    MDNS.addService("osc", "udp", OSC_IN_PORT);
+    MDNS.addService("_osc", "_udp", OSC_IN_PORT);
 
     Serial.println("setup finished!");
 }

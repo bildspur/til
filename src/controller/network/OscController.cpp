@@ -27,7 +27,7 @@ void OscController::loop() {
         if (!msg.hasError()) {
 
             // feed because of watchdog
-            ESP.wdtFeed();
+            //ESP.wdtFeed();
 
             routeOSCMessage(msg);
         }

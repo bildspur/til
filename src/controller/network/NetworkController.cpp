@@ -2,6 +2,7 @@
 // Created by Florian on 27.11.17.
 //
 
+#include <ESPmDNS.h>
 #include "NetworkController.h"
 
 NetworkController::NetworkController(const char *deviceName, const char *ssid, const char *password,
@@ -15,8 +16,6 @@ NetworkController::NetworkController(const char *deviceName, const char *ssid, c
 void NetworkController::setup() {
     BaseController::setup();
 
-    WiFi.hostname(deviceName);
-
     if(wifiMode == WIFI_STA)
     {
         initSTA();
@@ -26,6 +25,8 @@ void NetworkController::setup() {
     {
         setupAP();
     }
+
+    WiFi.setHostname(deviceName);
 
     setupMDNS();
 
@@ -81,8 +82,8 @@ void NetworkController::setupMDNS() {
         Serial.println("Error setting up MDNS responder!");
     }
 
-    // Add service to MDNS-SD
-    MDNS.addServiceTxt("osc", "udp", "mac", WiFi.macAddress());
+    // Add service to MDNS-SD -> does not work atm
+    //MDNS.addServiceTxt("_osc", "_udp", "mac", WiFi.macAddress());
 }
 
 void NetworkController::printNetworkInformation() {
