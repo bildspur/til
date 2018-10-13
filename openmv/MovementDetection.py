@@ -17,6 +17,7 @@ uart = pyb.UART(3, 9600, timeout_char = 1000)
 red_led = pyb.LED(1)
 green_led = pyb.LED(2)
 blue_led = pyb.LED(3)
+ir_leds = pyb.LED(4)
 
 trigger_threshold = 5
 
@@ -40,6 +41,7 @@ min_life = 10
 min_distance = 150
 
 # start of  main
+ir_leds.on()
 sensor.skip_frames(time = 2000) # Give the user time to get ready.
 extra_fb.replace(sensor.snapshot())
 
