@@ -7,7 +7,6 @@
 
 Luboid::Luboid(uint8_t id, uint8_t distance) {
     this->id = id;
-    this->distance = distance;
 }
 
 void Luboid::update() {
@@ -27,14 +26,6 @@ float Luboid::getBrightness() {
 
 uint8_t Luboid::getId() {
     return id;
-}
-
-void Luboid::setDistance(uint8_t value) {
-    distance = value;
-}
-
-uint8_t Luboid::getDistance() {
-    return distance;
 }
 
 void Luboid::turnOn(bool easing) {
