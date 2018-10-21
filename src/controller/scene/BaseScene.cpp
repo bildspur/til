@@ -16,13 +16,12 @@ void BaseScene::setup() {
 void BaseScene::loop() {
     BaseController::loop();
 
-    // update leafs
-    for(auto i = 0; i < installation->getSize(); i++)
-    {
+    // update lubiods
+    for (auto i = 0; i < installation->getSize(); i++) {
         installation->getLuboid(i)->update();
     }
 }
 
-const char * BaseScene::getName() const {
+const char *BaseScene::getName() const {
     return name;
 }

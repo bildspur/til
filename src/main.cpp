@@ -89,7 +89,7 @@ void setup() {
     delay(5000);
 
     // setup luboids
-    installation.loadLuboids();
+    installation.initLuboids();
 
     // setup controllers
     for (auto &controller : controllers) {

@@ -9,11 +9,11 @@
 #define EEPROM_SIZE_ADDR 0x00
 #define EEPROM_DATA_ADDR 0x02
 
-typedef Luboid* LuboidPtr;
+typedef Luboid *LuboidPtr;
 
 class Installation {
 private:
-    LuboidPtr *leafs;
+    LuboidPtr *lubiods;
 
     uint16_t size;
 
@@ -28,11 +28,11 @@ public:
 
     LuboidPtr getLuboid(int index);
 
-    void loadLuboids();
-
-    void saveLuboids();
-
     void initLuboids();
+
+    void turnOn();
+
+    void turnOff();
 };
 
 
