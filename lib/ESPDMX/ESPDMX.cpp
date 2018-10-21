@@ -5,7 +5,9 @@
 // Copyright (C) 2015  Rick <ricardogg95@gmail.com>
 // This work is licensed under a GNU style license.
 //
-// Last change: Marcel Seerig <https://github.com/mseerig>
+// Last change:
+// Marcel Seerig <https://github.com/mseerig>
+// Florian Bruggisser 2018 - changed to ESP32
 //
 // Documentation and samples are available at https://github.com/Rickgg/ESP-Dmx
 // - - - - -
@@ -17,7 +19,6 @@
 #include <HardwareSerial.h>
 
 
-
 #define dmxMaxChannel  512
 #define defaultMax 32
 
@@ -27,84 +28,83 @@
 #define BREAKFORMAT    SERIAL_8N1
 
 bool dmxStarted = false;
-int sendPin = 2;		//dafault on ESP32
+int sendPin = 2;        //default on ESP32
 int receivePin = -1;
 
 //DMX value array and size. Entry 0 will hold startbyte
 uint8_t dmxData[dmxMaxChannel] = {};
-int chanSize;
+int chanSize = defaultMax;
 
 HardwareSerial DMXSerial(1);
 
 void DMXESPSerial::init() {
-  chanSize = defaultMax;
+    // is that not limiting the channel size?
+    // chanSize = defaultMax;
 
-  DMXSerial.begin(DMXSPEED, DMXFORMAT, receivePin, sendPin);
-  pinMode(sendPin, OUTPUT);
-  dmxStarted = true;
+    DMXSerial.begin(DMXSPEED, DMXFORMAT, receivePin, sendPin);
+    pinMode(sendPin, OUTPUT);
+    dmxStarted = true;
 }
 
 // Set up the DMX-Protocol
 void DMXESPSerial::init(int chanQuant, int dmxPin) {
-  sendPin = dmxPin;
+    if (chanQuant > dmxMaxChannel || chanQuant <= 0) {
+        chanQuant = defaultMax;
+    }
 
-  if (chanQuant > dmxMaxChannel || chanQuant <= 0) {
-    chanQuant = defaultMax;
-  }
+    // set values
+    sendPin = dmxPin;
+    chanSize = chanQuant;
 
-  chanSize = chanQuant;
-
-  DMXSerial.begin(DMXSPEED, DMXFORMAT, receivePin, sendPin);
-  pinMode(sendPin, OUTPUT);
-  dmxStarted = true;
+    init();
 }
 
 // Function to read DMX data
 uint8_t DMXESPSerial::read(int Channel) {
-  if (dmxStarted == false) init();
+    if (!dmxStarted) init();
 
-  if (Channel < 1) Channel = 1;
-  if (Channel > dmxMaxChannel) Channel = dmxMaxChannel;
-  return(dmxData[Channel]);
+    if (Channel < 1) Channel = 1;
+    if (Channel > dmxMaxChannel) Channel = dmxMaxChannel;
+    return (dmxData[Channel]);
 }
 
 // Function to send DMX data
 void DMXESPSerial::write(int Channel, uint8_t value) {
-  if (dmxStarted == false) init();
+    if (!dmxStarted) init();
 
-  if (Channel < 1) Channel = 1;
-  if (Channel > chanSize) Channel = chanSize;
-  if (value < 0) value = 0;
-  if (value > 255) value = 255;
+    if (Channel < 1) Channel = 1;
+    if (Channel > chanSize) Channel = chanSize;
+    if (value < 0) value = 0;
+    if (value > 255) value = 255;
 
-  dmxData[Channel] = value;
+    dmxData[Channel] = value;
 }
 
 void DMXESPSerial::end() {
-  delete dmxData;
-  chanSize = 0;
-  DMXSerial.end();
-  dmxStarted == false;
+    delete dmxData;
+    chanSize = 0;
+    DMXSerial.end();
+    dmxStarted = false;
 }
 
 void DMXESPSerial::update() {
-  if (dmxStarted == false) init();
+    if (!dmxStarted) init();
 
-  //Send break
-  digitalWrite(sendPin, HIGH);
-  DMXSerial.begin(BREAKSPEED, BREAKFORMAT, receivePin, sendPin);
-  DMXSerial.write(0);
-  DMXSerial.flush();
-  delay(1);
-  DMXSerial.end();
+    //Send break
+    digitalWrite(sendPin, HIGH);
+    DMXSerial.begin(BREAKSPEED, BREAKFORMAT, receivePin, sendPin);
+    DMXSerial.write(0);
+    DMXSerial.flush();
+    delay(1);
+    DMXSerial.end();
 
-  //send data
-  DMXSerial.begin(DMXSPEED, DMXFORMAT, receivePin, sendPin);
-  digitalWrite(sendPin, LOW);
-  DMXSerial.write(dmxData, chanSize);
-  DMXSerial.flush();
-  delay(1);
-  DMXSerial.end();
+    //send data
+    DMXSerial.begin(DMXSPEED, DMXFORMAT, receivePin, sendPin);
+    digitalWrite(sendPin, LOW);
+    DMXSerial.write(dmxData, chanSize);
+    DMXSerial.flush();
+    delay(1);
+    DMXSerial.end();
 }
 
 // Function to update the DMX bus

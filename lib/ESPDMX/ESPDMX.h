@@ -5,7 +5,9 @@
 // Copyright (C) 2015  Rick <ricardogg95@gmail.com>
 // This work is licensed under a GNU style license.
 //
-// Last change: Marcel Seerig <https://github.com/mseerig>
+// Last change:
+// Marcel Seerig <https://github.com/mseerig>
+// Florian Bruggisser 2018 - changed to ESP32
 //
 // Documentation and samples are available at https://github.com/Rickgg/ESP-Dmx
 // - - - - -
@@ -20,12 +22,17 @@
 
 class DMXESPSerial {
 public:
-  void init();
-  void init(int MaxChan, int dmxPin);
-  uint8_t read(int Channel);
-  void write(int channel, uint8_t value);
-  void update();
-  void end();
+    void init();
+
+    void init(int MaxChan, int dmxPin);
+
+    uint8_t read(int Channel);
+
+    void write(int channel, uint8_t value);
+
+    void update();
+
+    void end();
 };
 
 #endif

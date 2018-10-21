@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <ESPmDNS.h>
+#include <inttypes.h>
 
 #include "controller/BaseController.h"
 #include "model/Luboid.h"
