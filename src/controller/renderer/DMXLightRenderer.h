@@ -11,6 +11,9 @@
 
 #define DMX_MAX_CHANNEL 512
 
+#define DMX_MIN_VALUE 0
+#define DMX_MAX_VALUE 255
+
 class DMXLightRenderer : public LightRenderer {
 private:
     DMXESPSerial *dmx;
