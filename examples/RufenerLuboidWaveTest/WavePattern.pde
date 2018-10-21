@@ -1,0 +1,7 @@
+class WavePattern
+{
+
+  void update()
+  {
+  }
+}
