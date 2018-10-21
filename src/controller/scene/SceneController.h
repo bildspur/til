@@ -9,10 +9,12 @@
 
 class SceneController : public BaseController {
 private:
-    BaseScene* activeScene;
+    BaseScene *activeScene;
+
+    bool running = true;
 
 public:
-    explicit SceneController(BaseScene* defaultScene);
+    explicit SceneController(BaseScene *defaultScene);
 
     void setup() override;
 
@@ -21,6 +23,10 @@ public:
     BaseScene *getActiveScene() const;
 
     void setActiveScene(BaseScene *activeScene);
+
+    bool isRunning() const;
+
+    void setRunning(bool running);
 };
 
 #endif //SILVA_SCENECONTROLLER_H

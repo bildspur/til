@@ -17,7 +17,9 @@ void SceneController::setup() {
 void SceneController::loop() {
     BaseController::loop();
 
-    activeScene->loop();
+    // update scene
+    if (running)
+        activeScene->loop();
 }
 
 BaseScene *SceneController::getActiveScene() const {
@@ -26,4 +28,12 @@ BaseScene *SceneController::getActiveScene() const {
 
 void SceneController::setActiveScene(BaseScene *activeScene) {
     SceneController::activeScene = activeScene;
+}
+
+bool SceneController::isRunning() const {
+    return running;
+}
+
+void SceneController::setRunning(bool running) {
+    SceneController::running = running;
 }
