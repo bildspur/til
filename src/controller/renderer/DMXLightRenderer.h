@@ -18,7 +18,7 @@ private:
     uint8_t lightChannelSize;
 
 public:
-    explicit DMXLightRenderer(uint8_t pin, uint8_t lightChannelSize, Installation *installation,
+    explicit DMXLightRenderer(uint8_t pin, uint8_t lightAddressSize, Installation *installation,
                               float minBrightness = 0.0f, float maxBrightness = 1.0f);
 
     void setup() override;

@@ -14,14 +14,15 @@
 #include "controller/scene/StarScene.h"
 #include "controller/scene/SceneController.h"
 #include "controller/renderer/SerialLightRenderer.h"
+#include "controller/renderer/DMXLightRenderer.h"
 
 // global
 #define INSTALLATION_DEBUG true
 
-#define LUBOID_COUNT 30
+#define LUBOID_COUNT 33
 
-#define MIN_BRIGHTNESS 0
-#define MAX_BRIGHTNESS 255
+#define MIN_BRIGHTNESS 0.0f
+#define MAX_BRIGHTNESS 1.0f
 
 // serial
 #define BAUD_RATE 115200
@@ -38,6 +39,10 @@
 #define OSC_OUT_PORT 9000
 #define OSC_IN_PORT 8000
 
+// dmx
+#define DMX_PIN 24
+#define DMX_LIGHT_ADDRESS_SIZE 4
+
 // typedefs
 typedef BaseController *BaseControllerPtr;
 typedef Luboid *LuboidPtr;
@@ -52,7 +57,9 @@ auto ota = OTAController(DEVICE_NAME, OTA_PASSWORD, OTA_PORT);
 auto osc = OscController(OSC_IN_PORT, OSC_OUT_PORT);
 
 // renderer
-LightRenderer *renderer = new SerialLightRenderer(&installation);
+LightRenderer *renderer = new DMXLightRenderer(DMX_PIN, DMX_LIGHT_ADDRESS_SIZE, &installation, MIN_BRIGHTNESS,
+                                               MAX_BRIGHTNESS);
+LightRenderer *debugRenderer = new SerialLightRenderer(&installation, MIN_BRIGHTNESS, MAX_BRIGHTNESS);
 
 // scenes
 StarScene starScene = StarScene(&installation);
@@ -64,12 +71,14 @@ BaseControllerPtr controllers[] = {
         &network,
         &ota,
         &osc,
+        debugRenderer,
         renderer,
         &sceneController
 };
 
 // methods
 void handleOsc(OSCMessage &msg);
+
 void changeScene(BaseScene *scene);
 
 
@@ -103,8 +112,7 @@ void loop() {
     }
 }
 
-void changeScene(BaseScene *scene)
-{
+void changeScene(BaseScene *scene) {
     sceneController.setActiveScene(scene);
 
     // setup scene
