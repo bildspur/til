@@ -12,6 +12,8 @@ int luboidSpace = 20;
 
 int padding = 50;
 
+boolean thereIsANewWave = false;
+
 void setup()
 {
   frameRate(40);
@@ -31,7 +33,7 @@ void draw()
 {
   background(0);
 
-  star.update();
+  //star.update();
   wave.update();
 
   updateLuboids();
@@ -68,4 +70,5 @@ void renderLights()
 void keyPressed()
 {
   println("send wave!");
+  thereIsANewWave = true;
 }

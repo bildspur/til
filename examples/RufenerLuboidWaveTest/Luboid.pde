@@ -1,6 +1,6 @@
 class Luboid
 {
-  float EASING_SPEED = 0.05;
+  float EASING_SPEED = 0.1;
 
   int id;
   EasingValue brightness = new EasingValue(0.0, EASING_SPEED);
