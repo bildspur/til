@@ -7,9 +7,6 @@
 
 #include "../util/EasingValue.h"
 
-#define MIN_DISTANCE 0
-#define MAX_DISTANCE 255
-
 #define LUBOID_MIN_BRIGHTNESS 0.0f
 #define LUBOID_MAX_BRIGHTNESS 1.0f
 
