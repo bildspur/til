@@ -39,7 +39,7 @@ void DMXLightRenderer::render(LuboidPtr luboid) {
 
     // convert to dmx
     auto dmxValue = static_cast<uint8_t>(lround(
-            FloatUtil::map(brightness, minBrightness, maxBrightness, DMX_MIN_VALUE, DMX_MAX_VALUE)));
+            FloatUtil::map(brightness, LUBOID_MIN_BRIGHTNESS, LUBOID_MAX_BRIGHTNESS, DMX_MIN_VALUE, DMX_MAX_VALUE)));
 
     // set dmx
     dmx->write(address, dmxValue);
