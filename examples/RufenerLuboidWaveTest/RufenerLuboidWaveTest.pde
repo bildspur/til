@@ -58,7 +58,8 @@ void renderLights()
   for (Luboid l : luboids)
   {
     int id = l.id;
-    int brightness = round(map(l.brightness.get(), MIN_BRIGHTNESS, MAX_BRIGHTNESS, 0, 255));
+    float globalBrightness = map(l.brightness.get(), 0.0f, 1.0f, MIN_BRIGHTNESS, MAX_BRIGHTNESS);
+    int brightness = round(map(globalBrightness, 0.0f, 1.0f, 0, 255));
 
     stroke(255);
     fill(brightness);

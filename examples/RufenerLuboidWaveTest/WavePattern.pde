@@ -3,8 +3,8 @@ class WavePattern
   long[] waves = new long[10];
   int nextWave = 0;
 
-  int WAVE_TIME = 3000; // seconds per wave
-  int WAVE_TRAVEL_SPEED = 500;
+  int WAVE_TIME = 1000; // seconds per wave
+  int WAVE_TRAVEL_SPEED = 100;
 
   void update()
   {
