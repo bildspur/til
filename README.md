@@ -1,6 +1,8 @@
 # TIL
 TIL is an interactive light installation.
 
+![TIL Example](documentation/example_screen.png)
+
 ### Develop
 
 ```bash
