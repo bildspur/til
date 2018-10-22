@@ -5,18 +5,18 @@
 #include "DMXLightRenderer.h"
 #include "../../util/FloatUtil.h"
 
-DMXLightRenderer::DMXLightRenderer(uint8_t pin, uint8_t lightAddressSize, Installation *installation,
+DMXLightRenderer::DMXLightRenderer(uint8_t txPin, uint8_t lightAddressSize, Installation *installation,
                                    float minBrightness, float maxBrightness)
         : LightRenderer(installation, minBrightness, maxBrightness) {
     this->lightChannelSize = lightAddressSize;
-    this->pin = pin;
+    this->txPin = txPin;
     this->dmx = new DMXESPSerial();
 }
 
 void DMXLightRenderer::setup() {
     LightRenderer::setup();
 
-    dmx->init(DMX_MAX_CHANNEL, pin);
+    dmx->init(DMX_MAX_CHANNEL, txPin);
 }
 
 void DMXLightRenderer::loop() {

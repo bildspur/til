@@ -51,4 +51,4 @@ add_custom_target(
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-add_executable(${PROJECT_NAME} ${SRC_LIST} src/controller/renderer/DMXLightRenderer.cpp src/controller/renderer/DMXLightRenderer.h src/controller/scene/WaveScene.cpp src/controller/scene/WaveScene.h)
+add_executable(${PROJECT_NAME} ${SRC_LIST} src/controller/renderer/DMXLightRenderer.cpp src/controller/renderer/DMXLightRenderer.h src/controller/scene/WaveScene.cpp src/controller/scene/WaveScene.h src/controller/sensor/interaction/SerialMotionSensor.cpp src/controller/sensor/interaction/SerialMotionSensor.h)

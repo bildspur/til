@@ -16,6 +16,8 @@
 #include "controller/renderer/SerialLightRenderer.h"
 #include "controller/renderer/DMXLightRenderer.h"
 #include "controller/scene/WaveScene.h"
+#include "controller/sensor/interaction/MotionSensor.h"
+#include "controller/sensor/interaction/SerialMotionSensor.h"
 
 // global
 #define INSTALLATION_DEBUG true
@@ -25,6 +27,10 @@
 // rendering
 #define MIN_BRIGHTNESS 0.0f
 #define MAX_BRIGHTNESS 1.0f
+
+// motion
+#define MOTION_RX_PIN 12
+#define MOTION_UPDATE_FREQ 100
 
 // serial
 #define BAUD_RATE 115200
@@ -42,7 +48,7 @@
 #define OSC_IN_PORT 8000
 
 // dmx
-#define DMX_PIN 24
+#define DMX_TX_PIN 2
 #define DMX_LIGHT_ADDRESS_SIZE 4
 
 // wave (ms)
@@ -63,13 +69,16 @@ auto ota = OTAController(DEVICE_NAME, OTA_PASSWORD, OTA_PORT);
 auto osc = OscController(OSC_IN_PORT, OSC_OUT_PORT);
 
 // renderer
-LightRenderer *renderer = new DMXLightRenderer(DMX_PIN, DMX_LIGHT_ADDRESS_SIZE, &installation, MIN_BRIGHTNESS,
+LightRenderer *renderer = new DMXLightRenderer(DMX_TX_PIN, DMX_LIGHT_ADDRESS_SIZE, &installation, MIN_BRIGHTNESS,
                                                MAX_BRIGHTNESS);
 LightRenderer *debugRenderer = new SerialLightRenderer(&installation, MIN_BRIGHTNESS, MAX_BRIGHTNESS);
 
+// sensors
+MotionSensor *motionSensor = new SerialMotionSensor(MOTION_RX_PIN, MOTION_UPDATE_FREQ);
+
 // scenes
 StarScene starScene = StarScene(&installation);
-WaveScene waveScene = WaveScene(&installation, WAVE_TIME, WAVE_TRAVEL_SPEED);
+WaveScene waveScene = WaveScene(&installation, motionSensor, WAVE_TIME, WAVE_TRAVEL_SPEED);
 
 auto sceneController = SceneController(&starScene);
 
@@ -80,6 +89,7 @@ BaseControllerPtr controllers[] = {
         &osc,
         debugRenderer,
         renderer,
+        motionSensor,
         &sceneController,
         // important to be after scene controller -> overwrite scene
         &waveScene

@@ -16,14 +16,19 @@ void MotionSensor::loop() {
     BaseController::loop();
 
     // read value
-    if(timer->elapsed())
-    {
+    if (timer->elapsed()) {
         measure();
     }
 }
 
-bool MotionSensor::getMotionDetected() {
-    return isMotionDetected;
+bool MotionSensor::isMotionDetected(bool clearFlag) {
+    bool value = motionDetected;
+
+    // clear value if requested
+    if (clearFlag)
+        motionDetected = false;
+
+    return value;
 }
 
 void MotionSensor::measure() {

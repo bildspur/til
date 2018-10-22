@@ -4,8 +4,9 @@
 
 #include "WaveScene.h"
 
-WaveScene::WaveScene(Installation *installation, unsigned long waveTime,
+WaveScene::WaveScene(Installation *installation, MotionSensor *motionSensor, unsigned long waveTime,
                      unsigned long waveTravelSpeed) : BaseScene("WaveScene", installation) {
+    this->motionSensor = motionSensor;
     this->waveTime = waveTime;
     this->waveTravelSpeed = waveTravelSpeed;
 }
@@ -78,13 +79,9 @@ float WaveScene::windowedSine(float x) {
 }
 
 void WaveScene::pollNewWave() {
-    // check for wave
-    // todo add wave check!
-    if (false) {
+    // check for wave and clear flag
+    if (motionSensor->isMotionDetected(true)) {
         waves[nextWaveIndex] = millis();
         nextWaveIndex = static_cast<uint8_t>((nextWaveIndex + 1) % MAX_WAVES);
-
-        // clean flags
-        //thereIsANewWave = false;
     }
 }

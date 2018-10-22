@@ -16,7 +16,7 @@ private:
 protected:
     explicit MotionSensor(unsigned int updateFrequency = 250);
 
-    bool isMotionDetected = false;
+    bool motionDetected = false;
 
     Timer *timer;
 
@@ -27,7 +27,7 @@ public:
 
     virtual void measure();
 
-    virtual bool getMotionDetected();
+    virtual bool isMotionDetected(bool clearFlag = false);
 };
 
 #endif //TIL_MOTIONSENSOR_H

@@ -7,11 +7,14 @@
 
 
 #include "BaseScene.h"
+#include "../sensor/interaction/MotionSensor.h"
 
 #define MAX_WAVES 10
 
 class WaveScene : public BaseScene {
 private:
+    MotionSensor *motionSensor;
+
     unsigned long waves[MAX_WAVES];
     uint8_t nextWaveIndex = 0;
 
@@ -23,7 +26,8 @@ private:
     float windowedSine(float x);
 
 public:
-    explicit WaveScene(Installation *installation, unsigned long waveTime, unsigned long waveTravelSpeed);
+    explicit WaveScene(Installation *installation, MotionSensor *motionSensor, unsigned long waveTime,
+                       unsigned long waveTravelSpeed);
 
     void setup() override;
 
