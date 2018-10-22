@@ -19,9 +19,8 @@ void SerialLightRenderer::loop() {
 
     counter++;
 
-    if(counter % 1000 == 0)
-    {
-        Serial.printf("%3d update\n", counter);
+    if (counter % 100 == 0) {
+        Serial.printf("%3d update -> luboid 0: %3f\n", counter, installation->getLuboid(0)->getBrightness());
     }
 }
 

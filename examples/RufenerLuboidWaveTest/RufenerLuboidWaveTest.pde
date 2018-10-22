@@ -4,6 +4,7 @@ float MIN_BRIGHTNESS = 0.0f;
 Luboid[] luboids = new Luboid[10];
 
 StarPattern star = new StarPattern();
+TimeStarPattern timeStar = new TimeStarPattern();
 WavePattern wave = new WavePattern();
 
 int rectWidth = 40;
@@ -34,6 +35,7 @@ void draw()
   background(0);
 
   //star.update();
+  timeStar.update();
   wave.update();
 
   updateLuboids();
