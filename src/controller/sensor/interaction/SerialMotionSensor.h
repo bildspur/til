@@ -11,9 +11,14 @@
 class SerialMotionSensor : public MotionSensor {
 private:
     uint8_t rxPin;
+    unsigned long baud;
+
+    String inputString;
 
 public:
-    explicit SerialMotionSensor(uint8_t rxPin, unsigned int updateFrequency = 250);
+    explicit SerialMotionSensor(uint8_t rxPin, unsigned long baud, unsigned int updateFrequency = 250);
+
+    void setup() override;
 
     void measure() override;
 };

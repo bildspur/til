@@ -30,6 +30,7 @@
 
 // motion
 #define MOTION_RX_PIN 12
+#define MOTION_BAUD_RATE 9600
 #define MOTION_UPDATE_FREQ 100
 
 // serial
@@ -74,7 +75,7 @@ LightRenderer *renderer = new DMXLightRenderer(DMX_TX_PIN, DMX_LIGHT_ADDRESS_SIZ
 LightRenderer *debugRenderer = new SerialLightRenderer(&installation, MIN_BRIGHTNESS, MAX_BRIGHTNESS);
 
 // sensors
-MotionSensor *motionSensor = new SerialMotionSensor(MOTION_RX_PIN, MOTION_UPDATE_FREQ);
+MotionSensor *motionSensor = new SerialMotionSensor(MOTION_RX_PIN, MOTION_BAUD_RATE, MOTION_UPDATE_FREQ);
 
 // scenes
 StarScene starScene = StarScene(&installation);
