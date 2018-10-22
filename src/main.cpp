@@ -15,12 +15,14 @@
 #include "controller/scene/SceneController.h"
 #include "controller/renderer/SerialLightRenderer.h"
 #include "controller/renderer/DMXLightRenderer.h"
+#include "controller/scene/WaveScene.h"
 
 // global
 #define INSTALLATION_DEBUG true
 
 #define LUBOID_COUNT 33
 
+// rendering
 #define MIN_BRIGHTNESS 0.0f
 #define MAX_BRIGHTNESS 1.0f
 
@@ -43,6 +45,10 @@
 #define DMX_PIN 24
 #define DMX_LIGHT_ADDRESS_SIZE 4
 
+// wave (ms)
+#define WAVE_TIME 3000
+#define WAVE_TRAVEL_SPEED 500
+
 // typedefs
 typedef BaseController *BaseControllerPtr;
 typedef Luboid *LuboidPtr;
@@ -63,6 +69,7 @@ LightRenderer *debugRenderer = new SerialLightRenderer(&installation, MIN_BRIGHT
 
 // scenes
 StarScene starScene = StarScene(&installation);
+WaveScene waveScene = WaveScene(&installation, WAVE_TIME, WAVE_TRAVEL_SPEED);
 
 auto sceneController = SceneController(&starScene);
 
@@ -73,7 +80,9 @@ BaseControllerPtr controllers[] = {
         &osc,
         debugRenderer,
         renderer,
-        &sceneController
+        &sceneController,
+        // important to be after scene controller -> overwrite scene
+        &waveScene
 };
 
 // methods

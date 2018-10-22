@@ -12,14 +12,15 @@
 #define RANDOM_OFF_FACTOR 0.9
 
 class StarScene : public BaseScene {
+private:
+    static bool isRandomCalled(float factor);
+
 public:
-    StarScene(Installation *installation);
+    explicit StarScene(Installation *installation);
 
     void setup() override;
 
     void loop() override;
-
-    static bool isRandomCalled(float factor);
 };
 
 

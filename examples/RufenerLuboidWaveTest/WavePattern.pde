@@ -32,7 +32,8 @@ class WavePattern
       boolean waveIsRelevant = false;
       for (Luboid l : luboids)
       {
-        waveIsRelevant = updateLuboid(l, timeDiff);
+        if (updateLuboid(l, timeDiff))
+          waveIsRelevant = true;
       }
 
       // check if stop wave
