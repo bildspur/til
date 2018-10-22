@@ -26,7 +26,7 @@
 
 // rendering
 #define MIN_BRIGHTNESS 0.0f
-#define MAX_BRIGHTNESS 1.0f
+#define MAX_BRIGHTNESS 0.5f
 
 // motion
 #define MOTION_RX_PIN 12
