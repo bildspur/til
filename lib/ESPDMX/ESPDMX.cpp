@@ -95,7 +95,6 @@ void DMXESPSerial::update() {
     DMXSerial.begin(BREAKSPEED, BREAKFORMAT, receivePin, sendPin);
     DMXSerial.write(0);
     DMXSerial.flush();
-    delay(1);
     DMXSerial.end();
 
     //send data
@@ -103,7 +102,6 @@ void DMXESPSerial::update() {
     digitalWrite(sendPin, LOW);
     DMXSerial.write(dmxData, chanSize);
     DMXSerial.flush();
-    delay(1);
     DMXSerial.end();
 }
 
