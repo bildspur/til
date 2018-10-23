@@ -12,15 +12,20 @@ SerialLightRenderer::SerialLightRenderer(Installation *installation, float minBr
 
 void SerialLightRenderer::setup() {
     LightRenderer::setup();
+
+    watch.start();
 }
 
 void SerialLightRenderer::loop() {
     LightRenderer::loop();
 
-    counter++;
 
+    counter++;
     if (counter % 100 == 0) {
-        Serial.printf("%3d update -> luboid 0: %3f\n", counter, installation->getLuboid(0)->getBrightness());
+        watch.stop();
+        Serial.printf("Took %3f seconds\n", watch.elapsed() / 1000.0);
+        //Serial.printf("%3d update -> luboid 0: %3f\n", counter, installation->getLuboid(0)->getBrightness());
+        watch.start();
     }
 }
 
