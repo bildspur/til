@@ -23,7 +23,12 @@ void SerialLightRenderer::loop() {
     counter++;
     if (counter % 100 == 0) {
         watch.stop();
-        Serial.printf("Took %3f seconds\n", watch.elapsed() / 1000.0);
+        Serial.printf("%f\t%f\n", watch.elapsed() / 1000.0,
+                      floor(1 / (watch.elapsed() / 1000.0 / 100)));
+
+        /*Serial.printf("Took %f seconds\tframeRate: %f\n", watch.elapsed() / 1000.0,
+                      floor(1 / (watch.elapsed() / 1000.0 / 100)));
+                      */
         //Serial.printf("%3d update -> luboid 0: %3f\n", counter, installation->getLuboid(0)->getBrightness());
         watch.start();
     }

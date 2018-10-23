@@ -90,7 +90,7 @@ BaseControllerPtr controllers[] = {
         &osc,
         debugRenderer,
         renderer,
-        //motionSensor,
+        motionSensor,
         &sceneController,
         // important to be after scene controller -> overwrite scene
         &waveScene
