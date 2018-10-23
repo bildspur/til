@@ -6,7 +6,6 @@
 #define TIL_DMXLIGHTRENDERER_H
 
 
-#include <ESPDMX.h>
 #include "LightRenderer.h"
 
 #define DMX_MAX_CHANNEL 512
@@ -16,9 +15,11 @@
 
 class DMXLightRenderer : public LightRenderer {
 private:
-    DMXESPSerial *dmx;
     uint8_t txPin;
     uint8_t lightChannelSize;
+    uint8_t dmxBuffer[DMX_MAX_CHANNEL];
+
+    void publishBuffer();
 
 public:
     explicit DMXLightRenderer(uint8_t txPin, uint8_t lightAddressSize, Installation *installation,

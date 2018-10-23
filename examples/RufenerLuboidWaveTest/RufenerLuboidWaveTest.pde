@@ -37,7 +37,7 @@ void draw()
   background(0);
 
   //star.update();
-  timeStar.update();
+  //timeStar.update();
   wave.update();
 
   updateLuboids();

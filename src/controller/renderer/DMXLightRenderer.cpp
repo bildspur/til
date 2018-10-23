@@ -2,28 +2,30 @@
 // Created by Florian Bruggisser on 21.10.18.
 //
 
+#include <esp_task_wdt.h>
 #include "DMXLightRenderer.h"
 #include "../../util/FloatUtil.h"
+#include "../driver/LXESP32DMX/LXESP32DMX.h"
 
 DMXLightRenderer::DMXLightRenderer(uint8_t txPin, uint8_t lightAddressSize, Installation *installation,
                                    float minBrightness, float maxBrightness)
         : LightRenderer(installation, minBrightness, maxBrightness) {
     this->lightChannelSize = lightAddressSize;
     this->txPin = txPin;
-    this->dmx = new DMXESPSerial();
 }
 
 void DMXLightRenderer::setup() {
     LightRenderer::setup();
 
-    dmx->init(DMX_MAX_CHANNEL, txPin);
+    pinMode(txPin, OUTPUT);
+    ESP32DMX.startOutput(txPin);
 }
 
 void DMXLightRenderer::loop() {
     LightRenderer::loop();
 
     // send dmx bulk
-    dmx->update();
+    publishBuffer();
 }
 
 void DMXLightRenderer::render(LuboidPtr luboid) {
@@ -42,6 +44,15 @@ void DMXLightRenderer::render(LuboidPtr luboid) {
             FloatUtil::map(brightness, LUBOID_MIN_BRIGHTNESS, LUBOID_MAX_BRIGHTNESS, DMX_MIN_VALUE, DMX_MAX_VALUE)));
 
     // set dmx on all 4 channels
-    for (int i = 0; i < lightChannelSize; i++)
-        dmx->write(address + i, dmxValue);
+    for (int i = 0; i < lightChannelSize; i++) {
+        dmxBuffer[static_cast<uint16_t>(address + i)] = dmxValue;
+    }
+}
+
+void DMXLightRenderer::publishBuffer() {
+    xSemaphoreTake(ESP32DMX.lxDataLock, portMAX_DELAY);
+    for (int i = 1; i < DMX_MAX_FRAME; i++) {
+        ESP32DMX.setSlot(i, dmxBuffer[i]);
+    }
+    xSemaphoreGive(ESP32DMX.lxDataLock);
 }
