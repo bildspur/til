@@ -6,6 +6,9 @@ class WavePattern
   int WAVE_TIME = 1000; // seconds per wave
   int WAVE_TRAVEL_SPEED = 100;
 
+  float minBrightness = 0.2f;
+  float maxBrightness = 1.0f;
+
   void update()
   {
     // check for wave
@@ -55,7 +58,8 @@ class WavePattern
       return false;
 
     float brightness = getFirstSineValue(x);
-    luboid.brightness.setTarget(brightness);
+    float clampedBrightness = map(brightness, MIN_BRIGHTNESS, MAX_BRIGHTNESS, minBrightness, maxBrightness);
+    luboid.brightness.setTarget(clampedBrightness);
     return true;
   }
 
