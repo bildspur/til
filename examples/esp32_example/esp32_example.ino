@@ -1,0 +1,117 @@
+// - - - - -
+// ESPDMX - A Arduino library for sending and receiving DMX using the builtin serial hardware port.
+//
+// Copyright (C) 2015  Rick <ricardogg95@gmail.com>
+// This work is licensed under a GNU style license.
+//
+// Last change: Musti <https://github.com/IRNAS> (edited by Musti)
+//
+// Documentation and samples are available at https://github.com/Rickgg/ESP-Dmx
+// Connect GPIO02 - TDX1 to MAX3485 or other driver chip to interface devices
+// Pin is defined in library
+// - - - - -
+
+#include <ESPDMX.h>
+
+DMXESPSerial dmx;
+
+void setup() {
+  Serial.begin(115200);
+
+  delay(3000);
+
+  Serial.println("starting...");
+
+  dmx.init(512, 2);           // initialization for complete bus
+
+  Serial.println("initialized...");
+  delay(200);               // wait a while (not necessary)
+
+  //fadeDmx(true, 10);
+  setDmx(0);
+
+  Serial.println("finished!");
+}
+
+void writeController(int channel, int value)
+{
+  for (int i = 0; i < 4; i++)
+    dmx.write(channel + i, value);
+}
+
+void loop() {
+  // turn slowly on
+
+  fadeDmx(true, 20);
+
+  /*
+    delay(5000);
+
+    blinkLeds(10, 100);
+
+    delay(1000);
+
+    // blink for a long time
+    fadeBlink(100, 500, 20);
+
+    delay(1000);
+
+    blinkLeds(4, 500);
+
+  */
+
+  delay(500);
+
+  // turn slowly off
+  fadeDmx(false, 20);
+
+  delay(500);
+}
+
+void blinkLeds(int times, int delayTime)
+{
+  for (int i = 0; i < times; i++)
+  {
+    setDmx(0);
+    delay(delayTime);
+    setDmx(255);
+    delay(delayTime);
+  }
+}
+
+void fadeBlink(int times, int delayTime, int fadeTime)
+{
+  for (int i = 0; i < times; i++)
+  {
+    fadeDmx(false, fadeTime);
+    delay(delayTime);
+    fadeDmx(true, fadeTime);
+    delay(delayTime);
+  }
+}
+
+void fadeDmx(boolean turnOn, int fadeSpeed)
+{
+  for (int i = 0; i < 256; i++)
+  {
+    if (turnOn)
+    {
+      setDmx(i);
+    }
+    else
+    {
+      setDmx(255 - i);
+    }
+
+    delay(fadeSpeed);
+  }
+}
+
+void setDmx(int value)
+{
+  for (int i = 0; i < 512; i++)
+  {
+    dmx.write(i, value);
+  }
+  dmx.update();
+}
