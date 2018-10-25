@@ -6,7 +6,7 @@
 #include "SerialLightRenderer.h"
 
 SerialLightRenderer::SerialLightRenderer(Installation *installation, float minBrightness, float maxBrightness)
-        : LightRenderer(installation, minBrightness, maxBrightness) {
+        : LightRenderer(installation) {
 
 }
 
@@ -23,7 +23,8 @@ void SerialLightRenderer::loop() {
         String msg = "SLR;";
 
         for (int i = 0; i < installation->getSize(); i++) {
-            msg += String(installation->getLuboid(i)->getBrightness()) + ";";
+            auto brightness = mapToGlobalBrightnessRange(installation->getLuboid(i)->getBrightness());
+            msg += String(brightness) + ";";
         }
 
         msg += "\n";

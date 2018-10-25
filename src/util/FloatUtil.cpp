@@ -4,6 +4,7 @@
 
 #include <Arduino.h>
 #include "FloatUtil.h"
+#include "../model/Luboid.h"
 
 FloatUtil::FloatUtil() = default;
 
@@ -25,4 +26,8 @@ float FloatUtil::windowedSine(float x) {
 
 bool FloatUtil::isRandomCalled(float factor) {
     return (random(0, 1000) / 1000.0) > factor;
+}
+
+float FloatUtil::mapFromLEDBrightness(float value, float minValue, float maxValue) {
+    return FloatUtil::map(value, LUBOID_MIN_BRIGHTNESS, LUBOID_MAX_BRIGHTNESS, minValue, maxValue);
 }

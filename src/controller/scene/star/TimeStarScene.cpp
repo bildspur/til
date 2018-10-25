@@ -4,7 +4,6 @@
 
 #include "TimeStarScene.h"
 #include "../../../util/FloatUtil.h"
-#include "../../../util/GlobalSettings.h"
 
 TimeStarScene::TimeStarScene(Installation *installation,
                              unsigned long minDuration,
@@ -48,7 +47,7 @@ void TimeStarScene::loop() {
 
         // update
         float brightness = star->getBrightness(timeStamp);
-        float clampedBrightness = GlobalSettings::clampGlobalBrightness(brightness, minBrightness, maxBrightness);
+        float clampedBrightness = FloatUtil::mapFromLEDBrightness(brightness, minBrightness, maxBrightness);
         installation->getLuboid(i)->setBrightness(clampedBrightness);
     }
 }

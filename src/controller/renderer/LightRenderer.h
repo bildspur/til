@@ -10,12 +10,9 @@
 
 class LightRenderer : public BaseController {
 protected:
-    explicit LightRenderer(Installation *installation, float minBrightness = 0.0f, float maxBrightness = 1.0f);
+    explicit LightRenderer(Installation *installation);
 
     Installation *installation;
-
-    float minBrightness;
-    float maxBrightness;
 
 public:
     void setup() override;
@@ -24,13 +21,7 @@ public:
 
     virtual void render(LuboidPtr luboid);
 
-    float getMinBrightness() const;
-
-    void setMinBrightness(float minBrightness);
-
-    float getMaxBrightness() const;
-
-    void setMaxBrightness(float maxBrightness);
+    float mapToGlobalBrightnessRange(float value);
 };
 
 

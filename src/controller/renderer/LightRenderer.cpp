@@ -3,11 +3,10 @@
 //
 
 #include "LightRenderer.h"
+#include "../../util/FloatUtil.h"
 
-LightRenderer::LightRenderer(Installation *installation, float minBrightness, float maxBrightness) {
+LightRenderer::LightRenderer(Installation *installation) {
     this->installation = installation;
-    this->minBrightness = minBrightness;
-    this->maxBrightness = maxBrightness;
 }
 
 void LightRenderer::setup() {
@@ -27,18 +26,8 @@ void LightRenderer::render(LuboidPtr luboid) {
     // send out data
 }
 
-float LightRenderer::getMinBrightness() const {
-    return minBrightness;
-}
-
-void LightRenderer::setMinBrightness(float minBrightness) {
-    LightRenderer::minBrightness = minBrightness;
-}
-
-float LightRenderer::getMaxBrightness() const {
-    return maxBrightness;
-}
-
-void LightRenderer::setMaxBrightness(float maxBrightness) {
-    LightRenderer::maxBrightness = maxBrightness;
+float LightRenderer::mapToGlobalBrightnessRange(float value) {
+    return FloatUtil::map(value,
+                          LUBOID_MIN_BRIGHTNESS, LUBOID_MAX_BRIGHTNESS,
+                          installation->getMinBrightness(), installation->getMaxBrightness());
 }

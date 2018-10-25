@@ -17,6 +17,10 @@ private:
 
     uint16_t size;
 
+    float minBrightness = 0.0f;
+
+    float maxBrightness = 1.0f;
+
 public:
     Installation(uint16_t size, LuboidPtr *luboids);
 
@@ -33,6 +37,14 @@ public:
     void turnOn();
 
     void turnOff();
+
+    float getMinBrightness() const;
+
+    void setMinBrightness(float ledMinBrightness);
+
+    float getMaxBrightness() const;
+
+    void setMaxBrightness(float ledMaxBrightness);
 };
 
 

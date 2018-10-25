@@ -18,6 +18,8 @@ public:
     static float windowedSine(float x);
 
     static bool isRandomCalled(float factor);
+
+    static float mapFromLEDBrightness(float value, float minValue, float maxValue);
 };
 
 

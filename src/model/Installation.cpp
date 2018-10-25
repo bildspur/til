@@ -3,6 +3,7 @@
 //
 
 #include "Installation.h"
+#include "../util/FloatUtil.h"
 
 Installation::Installation(uint16_t size, LuboidPtr *luboids) {
     this->size = size;
@@ -42,4 +43,20 @@ void Installation::turnOff() {
     for (auto i = 0; i < size; i++) {
         lubiods[i]->turnOff();
     }
+}
+
+float Installation::getMinBrightness() const {
+    return minBrightness;
+}
+
+void Installation::setMinBrightness(float ledMinBrightness) {
+    Installation::minBrightness = ledMinBrightness;
+}
+
+float Installation::getMaxBrightness() const {
+    return maxBrightness;
+}
+
+void Installation::setMaxBrightness(float ledMaxBrightness) {
+    Installation::maxBrightness = ledMaxBrightness;
 }

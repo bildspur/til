@@ -3,7 +3,6 @@
 //
 
 #include "WaveScene.h"
-#include "../../util/GlobalSettings.h"
 #include "../../util/FloatUtil.h"
 
 WaveScene::WaveScene(Installation *installation,
@@ -75,7 +74,7 @@ bool WaveScene::updateLuboid(LuboidPtr luboid, unsigned long timeDiff) {
 
     // get brightness and update
     float brightness = FloatUtil::windowedSine(x);
-    float clamped = GlobalSettings::clampGlobalBrightness(brightness, minBrightness, maxBrightness);
+    float clamped = FloatUtil::mapFromLEDBrightness(brightness, minBrightness, maxBrightness);
     luboid->setBrightness(clamped);
     return true;
 }

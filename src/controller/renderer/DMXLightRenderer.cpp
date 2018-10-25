@@ -9,7 +9,7 @@
 
 DMXLightRenderer::DMXLightRenderer(uint8_t txPin, uint8_t lightAddressSize, Installation *installation,
                                    float minBrightness, float maxBrightness)
-        : LightRenderer(installation, minBrightness, maxBrightness) {
+        : LightRenderer(installation) {
     this->lightChannelSize = lightAddressSize;
     this->txPin = txPin;
 }
@@ -35,9 +35,7 @@ void DMXLightRenderer::render(LuboidPtr luboid) {
     auto address = luboid->getId() * lightChannelSize;
 
     // map global brightness
-    auto brightness = FloatUtil::map(luboid->getBrightness(),
-                                     LUBOID_MIN_BRIGHTNESS, LUBOID_MAX_BRIGHTNESS,
-                                     minBrightness, maxBrightness);
+    auto brightness = mapToGlobalBrightnessRange(luboid->getBrightness());
 
     // convert to dmx
     auto dmxValue = static_cast<uint8_t>(lround(

@@ -18,7 +18,6 @@
 #include "controller/scene/WaveScene.h"
 #include "controller/sensor/interaction/MotionSensor.h"
 #include "controller/sensor/interaction/SerialMotionSensor.h"
-#include "util/GlobalSettings.h"
 #include "controller/scene/star/TimeStarScene.h"
 
 // global
@@ -53,7 +52,7 @@
 // time star scene
 #define TIME_STAR_MIN_DURATION 5000L
 #define TIME_STAR_MAX_DURATION 10000L
-#define TIME_STAR_RANDOM_ON_FACTOR 0.95f
+#define TIME_STAR_RANDOM_ON_FACTOR 0.99f
 #define TIME_STAR_MIN_BRIGHTNESS 0.0f
 #define TIME_STAR_MAX_BRIGHTNESS 1.0f
 
@@ -84,7 +83,7 @@ LightRenderer *debugRenderer = new SerialLightRenderer(&installation);
 MotionSensor *motionSensor = new SerialMotionSensor(MOTION_RX_PIN, MOTION_BAUD_RATE, MOTION_UPDATE_FREQ);
 
 // scenes
-StarScene starScene = StarScene(&installation);
+//StarScene starScene = StarScene(&installation);
 TimeStarScene timeStarScene = TimeStarScene(&installation,
                                             TIME_STAR_MIN_DURATION,
                                             TIME_STAR_MAX_DURATION,
@@ -127,13 +126,6 @@ void setup() {
     // setup random seed
     randomSeed(static_cast<unsigned long>(analogRead(0)));
 
-    // load settings
-    GlobalSettings::load();
-
-    // apply settings to renderer
-    renderer->setMinBrightness(GlobalSettings::getLedMinBrightness());
-    renderer->setMaxBrightness(GlobalSettings::getLedMinBrightness());
-
     // setup luboids
     installation.initLuboids();
 
@@ -166,9 +158,7 @@ void changeScene(BaseScene *scene) {
 }
 
 void handleOsc(OSCMessage &msg) {
-    /*
     msg.dispatch("/til/scene/tree", [](OSCMessage &msg) {
-        changeScene(&treeScene);
+        //changeScene(&treeScene);
     });
-     */
 }
