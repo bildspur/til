@@ -38,10 +38,6 @@ class TimeStarPattern
     }
   }
 
-  void turnOn(TimeStar star)
-  {
-  }
-
   boolean isRandomCalled(float factor) {
     return (random(0, 1000) / 1000.0) > factor;
   }
