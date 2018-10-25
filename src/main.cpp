@@ -18,15 +18,12 @@
 #include "controller/scene/WaveScene.h"
 #include "controller/sensor/interaction/MotionSensor.h"
 #include "controller/sensor/interaction/SerialMotionSensor.h"
+#include "util/GlobalSettings.h"
 
 // global
 #define INSTALLATION_DEBUG true
 
 #define LUBOID_COUNT 33
-
-// rendering
-#define MIN_BRIGHTNESS 0.0f
-#define MAX_BRIGHTNESS 0.5f
 
 // motion
 #define MOTION_RX_PIN 12
@@ -70,9 +67,8 @@ auto ota = OTAController(DEVICE_NAME, OTA_PASSWORD, OTA_PORT);
 auto osc = OscController(OSC_IN_PORT, OSC_OUT_PORT);
 
 // renderer
-LightRenderer *renderer = new DMXLightRenderer(DMX_TX_PIN, DMX_LIGHT_ADDRESS_SIZE, &installation, MIN_BRIGHTNESS,
-                                               MAX_BRIGHTNESS);
-LightRenderer *debugRenderer = new SerialLightRenderer(&installation, MIN_BRIGHTNESS, MAX_BRIGHTNESS);
+LightRenderer *renderer = new DMXLightRenderer(DMX_TX_PIN, DMX_LIGHT_ADDRESS_SIZE, &installation);
+LightRenderer *debugRenderer = new SerialLightRenderer(&installation);
 
 // sensors
 MotionSensor *motionSensor = new SerialMotionSensor(MOTION_RX_PIN, MOTION_BAUD_RATE, MOTION_UPDATE_FREQ);
@@ -107,6 +103,13 @@ void setup() {
 
     // wait some seconds for debugging
     delay(5000);
+
+    // load settings
+    GlobalSettings::load();
+
+    // apply settings to renderer
+    renderer->setMinBrightness(GlobalSettings::getLedMinBrightness());
+    renderer->setMaxBrightness(GlobalSettings::getLedMinBrightness());
 
     // setup luboids
     installation.initLuboids();

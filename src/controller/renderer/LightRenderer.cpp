@@ -17,8 +17,7 @@ void LightRenderer::setup() {
 void LightRenderer::loop() {
     BaseController::loop();
 
-    for(auto i = 0; i < installation->getSize(); i++)
-    {
+    for (auto i = 0; i < installation->getSize(); i++) {
         auto leaf = installation->getLuboid(i);
         render(leaf);
     }
@@ -26,4 +25,20 @@ void LightRenderer::loop() {
 
 void LightRenderer::render(LuboidPtr luboid) {
     // send out data
+}
+
+float LightRenderer::getMinBrightness() const {
+    return minBrightness;
+}
+
+void LightRenderer::setMinBrightness(float minBrightness) {
+    LightRenderer::minBrightness = minBrightness;
+}
+
+float LightRenderer::getMaxBrightness() const {
+    return maxBrightness;
+}
+
+void LightRenderer::setMaxBrightness(float maxBrightness) {
+    LightRenderer::maxBrightness = maxBrightness;
 }

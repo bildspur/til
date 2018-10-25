@@ -23,6 +23,14 @@ public:
     void loop() override;
 
     virtual void render(LuboidPtr luboid);
+
+    float getMinBrightness() const;
+
+    void setMinBrightness(float minBrightness);
+
+    float getMaxBrightness() const;
+
+    void setMaxBrightness(float maxBrightness);
 };
 
 
