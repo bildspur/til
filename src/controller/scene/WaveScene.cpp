@@ -3,12 +3,16 @@
 //
 
 #include "WaveScene.h"
+#include "../../util/GlobalSettings.h"
 
 WaveScene::WaveScene(Installation *installation, MotionSensor *motionSensor, unsigned long waveTime,
-                     unsigned long waveTravelSpeed) : BaseScene("WaveScene", installation) {
+                     unsigned long waveTravelSpeed, float minBrightness, float maxBrightness) : BaseScene("WaveScene",
+                                                                                                          installation) {
     this->motionSensor = motionSensor;
     this->waveTime = waveTime;
     this->waveTravelSpeed = waveTravelSpeed;
+    this->minBrightness = minBrightness;
+    this->maxBrightness = maxBrightness;
 }
 
 void WaveScene::setup() {
@@ -66,7 +70,8 @@ bool WaveScene::updateLuboid(LuboidPtr luboid, unsigned long timeDiff) {
 
     // get brightness and update
     float brightness = windowedSine(x);
-    luboid->setBrightness(brightness);
+    float clamped = GlobalSettings::clampGlobalBrightness(brightness, minBrightness, maxBrightness);
+    luboid->setBrightness(clamped);
     return true;
 }
 

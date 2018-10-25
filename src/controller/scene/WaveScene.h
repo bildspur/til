@@ -25,9 +25,12 @@ private:
 
     float windowedSine(float x);
 
+    float minBrightness;
+    float maxBrightness;
+
 public:
     explicit WaveScene(Installation *installation, MotionSensor *motionSensor, unsigned long waveTime,
-                       unsigned long waveTravelSpeed);
+                       unsigned long waveTravelSpeed, float minBrightness = 0.0f, float maxBrightness = 1.0f);
 
     void setup() override;
 
