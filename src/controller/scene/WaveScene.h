@@ -23,8 +23,6 @@ private:
 
     bool updateLuboid(LuboidPtr luboid, unsigned long timeDiff);
 
-    float windowedSine(float x);
-
     float minBrightness;
     float maxBrightness;
 

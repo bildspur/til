@@ -4,6 +4,7 @@
 
 #include "WaveScene.h"
 #include "../../util/GlobalSettings.h"
+#include "../../util/FloatUtil.h"
 
 WaveScene::WaveScene(Installation *installation,
                      MotionSensor *motionSensor,
@@ -73,18 +74,10 @@ bool WaveScene::updateLuboid(LuboidPtr luboid, unsigned long timeDiff) {
         return false;
 
     // get brightness and update
-    float brightness = windowedSine(x);
+    float brightness = FloatUtil::windowedSine(x);
     float clamped = GlobalSettings::clampGlobalBrightness(brightness, minBrightness, maxBrightness);
     luboid->setBrightness(clamped);
     return true;
-}
-
-float WaveScene::windowedSine(float x) {
-    if (x < 0.0f || x > 1.0f)
-        return 0.0f;
-
-    // calculate sine
-    return static_cast<float>(0.5 * (1 + sin(2 * PI * x - (PI / 2))));
 }
 
 void WaveScene::pollNewWave() {

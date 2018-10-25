@@ -7,16 +7,31 @@
 
 
 #include "../BaseScene.h"
+#include "TimeStar.h"
 
 class TimeStarScene : public BaseScene {
 private:
-    float randomOnFactor;
-    float randomOffFactor;
+    typedef TimeStar *TimeStarPtr;
 
-    static bool isRandomCalled(float factor);
+    float randomOnFactor;
+
+    float minBrightness;
+    float maxBrightness;
+
+    unsigned long minDuration;
+    unsigned long maxDuration;
+
+    uint16_t starCount;
+
+    TimeStarPtr *stars;
 
 public:
-    explicit TimeStarScene(Installation *installation, float randomOnFactor = 0.95f, float randomOffFactor = 0.9f);
+    explicit TimeStarScene(Installation *installation,
+                           unsigned long minDuration,
+                           unsigned long maxDuration,
+                           float randomOnFactor = 0.95f,
+                           float minBrightness = 0.0f,
+                           float maxBrightness = 1.0f);
 
     void setup() override;
 

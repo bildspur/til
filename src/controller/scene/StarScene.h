@@ -13,7 +13,6 @@
 
 class StarScene : public BaseScene {
 private:
-    static bool isRandomCalled(float factor);
 
 public:
     explicit StarScene(Installation *installation);
