@@ -36,36 +36,50 @@ void setup() {
 void writeController(int channel, int value)
 {
   for (int i = 0; i < 4; i++)
-    dmx.write(channel + i, value);
+    dmx.write((channel * 4) + i, value);
+  dmx.update();
 }
 
 void loop() {
   // turn slowly on
 
-  fadeDmx(true, 20);
+  //fadeDmx(true, 5);
 
-  /*
-    delay(5000);
-
-    blinkLeds(10, 100);
-
-    delay(1000);
-
-    // blink for a long time
-    fadeBlink(100, 500, 20);
-
-    delay(1000);
-
-    blinkLeds(4, 500);
-
-  */
-
-  delay(500);
+  //delay(500);
 
   // turn slowly off
-  fadeDmx(false, 20);
+  //fadeDmx(false, 5);
 
-  delay(500);
+  //delay(1000);
+
+  setDmx(0);
+  delay(5);
+
+  for (int i = 0; i < 33; i++)
+  {
+    Serial.print("Lighting up luboid ");
+    Serial.println(i);
+
+    fadeDmxSensible(true, i, 1, 40, 4);
+  }
+
+  for (int i = 0; i < 33; i++)
+  {
+    Serial.print("Lighting up luboid ");
+    Serial.println(i);
+
+    fadeDmxSensible(false, i, 1, 40, 4);
+  }
+
+  setDmx(0);
+  delay(1000);
+}
+
+void singleLightUp(int luboidId, int value)
+{
+  setDmx(0);
+
+  writeController(luboidId, value);
 }
 
 void blinkLeds(int times, int delayTime)
@@ -87,6 +101,23 @@ void fadeBlink(int times, int delayTime, int fadeTime)
     delay(delayTime);
     fadeDmx(true, fadeTime);
     delay(delayTime);
+  }
+}
+
+void fadeDmxSensible(boolean turnOn, int luboidId, int fadeSpeed, int maxLight, int nspeed)
+{
+  for (int i = 0; i < maxLight; i += nspeed)
+  {
+    if (turnOn)
+    {
+      writeController(luboidId, i);
+    }
+    else
+    {
+      writeController(luboidId, maxLight - i);
+    }
+
+    delay(fadeSpeed);
   }
 }
 
