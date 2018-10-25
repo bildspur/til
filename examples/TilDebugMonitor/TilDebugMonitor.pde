@@ -1,59 +1,74 @@
-Luboid[] luboids = new Luboid[] {
-  new Luboid(0, 0, 50, 601, 9), 
-  new Luboid(1, 4, 30, 534, 9), 
-  new Luboid(2, 8, 30, 508, 8), 
-  new Luboid(3, 12, 40, 439, 10), 
-  new Luboid(4, 16, 50, 410, 8), 
-  new Luboid(5, 20, 30, 365, 7), 
-  new Luboid(6, 24, 40, 314, 9), 
-  new Luboid(7, 28, 30, 279, 7), 
-  new Luboid(8, 32, 50, 238, 10), 
-  new Luboid(9, 36, 30, 248, 8), 
-  new Luboid(10, 40, 50, 221, 6), 
-  new Luboid(11, 44, 40, 186, 8), 
-  new Luboid(12, 48, 30, 193, 2), 
-  new Luboid(13, 52, 30, 184, 5), 
-  new Luboid(14, 56, 40, 156, 7), 
-  new Luboid(15, 60, 30, 152, 9), 
-  new Luboid(16, 64, 30, 145, 2), 
-  new Luboid(17, 68, 30, 138, 10), 
-  new Luboid(18, 72, 50, 116, 1), 
-  new Luboid(19, 76, 50, 115, 3), 
-  new Luboid(20, 80, 30, 133, 5), 
-  new Luboid(21, 84, 50, 110, 6), 
-  new Luboid(22, 88, 30, 110, 7), 
-  new Luboid(23, 92, 50, 82, 8), 
-  new Luboid(24, 96, 30, 97, 2), 
-  new Luboid(25, 100, 30, 96, 10), 
-  new Luboid(26, 104, 30, 82, 5), 
-  new Luboid(27, 108, 50, 62, 9), 
-  new Luboid(28, 112, 40, 63, 3), 
-  new Luboid(29, 116, 40, 54, 7), 
-  new Luboid(30, 120, 30, 62, 6), 
-  new Luboid(31, 124, 40, 40, 4), 
-  new Luboid(32, 128, 40, 23, 5), 
-};
-
 int levels = 10;
 int padding = 50;
+
+String mcuPath = "/dev/tty.SLAB_USBtoUART";
+boolean isMcuAvailable = false;
+
+MicroControllerUnit mcu = new MicroControllerUnit(this, mcuPath);
 
 void setup()
 {
   frameRate(60);
   size(800, 400, FX2D);
+  surface.setTitle("TIL Debug Monitor");
 
   // fix luboids sizes
   for (Luboid luboid : luboids)
   {
     luboid.y = map(luboid.y, 1, levels, height - padding, 0 + padding);
   }
+
+  // try to attach
+  checkDevices();
+  if (isMcuAvailable)
+    mcu.attach();
 }
 
 void draw()
 {
+  checkDevices();
+
   background(0);
+  updateLights();
   renderLights();
   showLuboidInformation();
+  showInfo();
+}
+
+void updateLights()
+{
+  if (!mcu.isAttached())
+    return;
+
+  String raw = mcu.readData();
+  if (raw == null || !raw.startsWith("SLR"))
+    return;
+    
+  // display debug data
+  showDebug(raw);
+
+  // relevant data
+  String[] data = raw.split(";");
+  for (int i = 0; i < data.length - 2; i++)
+  {
+    float value = Float.parseFloat(data[i+1]);
+    int brightness = (int)round(map(value, 0f, 1f, 0f, 255f));
+    luboids[i].brightness = brightness;
+  }
+}
+
+void showDebug(String text)
+{
+  fill(0, 255, 0);
+  textSize(8);
+  text("Debug \"" + text + "\"", 20, height - 50);
+}
+
+void showInfo()
+{
+  fill(255);
+  textSize(12);
+  text("MCU detected: " + isMcuAvailable + "\tattached: " + (mcu.isAttached()) + "\tFPS: " + round(frameRate), 20, 20);
 }
 
 void showLuboidInformation()
@@ -122,3 +137,57 @@ void renderLights()
   }
   popMatrix();
 }
+
+void keyPressed()
+{
+  if (key == ' ')
+  {
+    // try to connect
+    if (isMcuAvailable)
+      mcu.attach();
+    else
+      println("No MCU detected!");
+  }
+}
+
+void checkDevices()
+{
+  isMcuAvailable = new File(mcuPath).exists();
+}
+
+// data
+Luboid[] luboids = new Luboid[] {
+  new Luboid(0, 0, 50, 601, 9), 
+  new Luboid(1, 4, 30, 534, 9), 
+  new Luboid(2, 8, 30, 508, 8), 
+  new Luboid(3, 12, 40, 439, 10), 
+  new Luboid(4, 16, 50, 410, 8), 
+  new Luboid(5, 20, 30, 365, 7), 
+  new Luboid(6, 24, 40, 314, 9), 
+  new Luboid(7, 28, 30, 279, 7), 
+  new Luboid(8, 32, 50, 238, 10), 
+  new Luboid(9, 36, 30, 248, 8), 
+  new Luboid(10, 40, 50, 221, 6), 
+  new Luboid(11, 44, 40, 186, 8), 
+  new Luboid(12, 48, 30, 193, 2), 
+  new Luboid(13, 52, 30, 184, 5), 
+  new Luboid(14, 56, 40, 156, 7), 
+  new Luboid(15, 60, 30, 152, 9), 
+  new Luboid(16, 64, 30, 145, 2), 
+  new Luboid(17, 68, 30, 138, 10), 
+  new Luboid(18, 72, 50, 116, 1), 
+  new Luboid(19, 76, 50, 115, 3), 
+  new Luboid(20, 80, 30, 133, 5), 
+  new Luboid(21, 84, 50, 110, 6), 
+  new Luboid(22, 88, 30, 110, 7), 
+  new Luboid(23, 92, 50, 82, 8), 
+  new Luboid(24, 96, 30, 97, 2), 
+  new Luboid(25, 100, 30, 96, 10), 
+  new Luboid(26, 104, 30, 82, 5), 
+  new Luboid(27, 108, 50, 62, 9), 
+  new Luboid(28, 112, 40, 63, 3), 
+  new Luboid(29, 116, 40, 54, 7), 
+  new Luboid(30, 120, 30, 62, 6), 
+  new Luboid(31, 124, 40, 40, 4), 
+  new Luboid(32, 128, 40, 23, 5), 
+};
