@@ -43,17 +43,23 @@ void updateLights()
   String raw = mcu.readData();
   if (raw == null || !raw.startsWith("SLR"))
     return;
-    
+
   // display debug data
-  showDebug(raw);
+  showDebug(raw.trim());
 
   // relevant data
   String[] data = raw.split(";");
   for (int i = 0; i < data.length - 2; i++)
   {
-    float value = Float.parseFloat(data[i+1]);
-    int brightness = (int)round(map(value, 0f, 1f, 0f, 255f));
-    luboids[i].brightness = brightness;
+    try
+    {
+      float value = Float.parseFloat(data[i+1]);
+      int brightness = (int)round(map(value, 0f, 1f, 0f, 255f));
+      luboids[i].brightness = brightness;
+    }
+    catch(Exception ex)
+    {
+    }
   }
 }
 

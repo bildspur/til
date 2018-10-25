@@ -8,7 +8,7 @@ class Luboid
   float y = 0;
 
   float width = 0;
-  float height = 7.5f;
+  float height = 10f;
 
   boolean isOn = false;
 

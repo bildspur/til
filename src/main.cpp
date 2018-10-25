@@ -84,7 +84,7 @@ LightRenderer *debugRenderer = new SerialLightRenderer(&installation);
 MotionSensor *motionSensor = new SerialMotionSensor(MOTION_RX_PIN, MOTION_BAUD_RATE, MOTION_UPDATE_FREQ);
 
 // scenes
-//StarScene starScene = StarScene(&installation);
+StarScene starScene = StarScene(&installation);
 TimeStarScene timeStarScene = TimeStarScene(&installation,
                                             TIME_STAR_MIN_DURATION,
                                             TIME_STAR_MAX_DURATION,
@@ -97,7 +97,7 @@ WaveScene waveScene = WaveScene(&installation, motionSensor,
                                 WAVE_MIN_BRIGHTNESS,
                                 WAVE_MAX_BRIGHTNESS);
 
-auto sceneController = SceneController(&timeStarScene);
+auto sceneController = SceneController(&starScene);
 
 // controller list
 BaseControllerPtr controllers[] = {
