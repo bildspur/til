@@ -6,6 +6,8 @@ boolean isMcuAvailable = false;
 
 MicroControllerUnit mcu = new MicroControllerUnit(this, mcuPath);
 
+boolean debug = false;
+
 void setup()
 {
   frameRate(60);
@@ -41,11 +43,16 @@ void updateLights()
     return;
 
   String raw = mcu.readData();
+
+  if (debug && raw != null && !raw.startsWith("SLR") && raw.trim() != "")
+    println("MCU: " + raw.trim());
+
   if (raw == null || !raw.startsWith("SLR"))
     return;
 
   // display debug data
-  showDebug(raw.trim());
+  if (debug)
+    showDebug(raw.trim());
 
   // relevant data
   String[] data = raw.split(";");

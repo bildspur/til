@@ -7,8 +7,8 @@
 
 
 class TimeStar {
-    unsigned long startTime;
-    unsigned long duration;
+    unsigned long startTime = 0;
+    unsigned long duration = 0;
 
 public:
     explicit TimeStar();

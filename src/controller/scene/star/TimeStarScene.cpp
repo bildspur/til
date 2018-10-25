@@ -42,8 +42,9 @@ void TimeStarScene::loop() {
     // rnd stars
     for (auto i = 0; i < starCount; i++) {
         auto star = stars[i];
-        if (!star->isRunning(timeStamp) && FloatUtil::isRandomCalled(randomOnFactor))
+        if (!star->isRunning(timeStamp) && FloatUtil::isRandomCalled(randomOnFactor)) {
             star->start(timeStamp, (unsigned long) lround(random(minDuration, maxDuration)));
+        }
 
         // update
         float brightness = star->getBrightness(timeStamp);

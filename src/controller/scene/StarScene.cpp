@@ -8,7 +8,6 @@
 
 StarScene::StarScene(Installation *installation) : BaseScene("StarScene", installation) {
     // init seed
-    randomSeed(static_cast<unsigned long>(analogRead(0)));
 }
 
 void StarScene::setup() {

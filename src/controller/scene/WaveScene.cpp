@@ -83,7 +83,11 @@ bool WaveScene::updateLuboid(LuboidPtr luboid, unsigned long timeDiff) {
 void WaveScene::pollNewWave() {
     // check for wave and clear flag
     if (motionSensor->isMotionDetected(true)) {
-        waves[nextWaveIndex] = millis();
-        nextWaveIndex = static_cast<uint8_t>((nextWaveIndex + 1) % MAX_WAVES);
+        startWave();
     }
+}
+
+void WaveScene::startWave() {
+    waves[nextWaveIndex] = millis();
+    nextWaveIndex = static_cast<uint8_t>((nextWaveIndex + 1) % MAX_WAVES);
 }

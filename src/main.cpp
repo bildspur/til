@@ -51,8 +51,8 @@
 #define DMX_LIGHT_ADDRESS_SIZE 4
 
 // time star scene
-#define TIME_STAR_MIN_DURATION 2000L
-#define TIME_STAR_MAX_DURATION 5000L
+#define TIME_STAR_MIN_DURATION 5000L
+#define TIME_STAR_MAX_DURATION 10000L
 #define TIME_STAR_RANDOM_ON_FACTOR 0.95f
 #define TIME_STAR_MIN_BRIGHTNESS 0.0f
 #define TIME_STAR_MAX_BRIGHTNESS 1.0f
@@ -97,7 +97,7 @@ WaveScene waveScene = WaveScene(&installation, motionSensor,
                                 WAVE_MIN_BRIGHTNESS,
                                 WAVE_MAX_BRIGHTNESS);
 
-auto sceneController = SceneController(&starScene);
+auto sceneController = SceneController(&timeStarScene);
 
 // controller list
 BaseControllerPtr controllers[] = {
@@ -123,6 +123,9 @@ void setup() {
 
     // wait some seconds for debugging
     delay(5000);
+
+    // setup random seed
+    randomSeed(static_cast<unsigned long>(analogRead(0)));
 
     // load settings
     GlobalSettings::load();
