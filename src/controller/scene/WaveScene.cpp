@@ -5,9 +5,13 @@
 #include "WaveScene.h"
 #include "../../util/GlobalSettings.h"
 
-WaveScene::WaveScene(Installation *installation, MotionSensor *motionSensor, unsigned long waveTime,
-                     unsigned long waveTravelSpeed, float minBrightness, float maxBrightness) : BaseScene("WaveScene",
-                                                                                                          installation) {
+WaveScene::WaveScene(Installation *installation,
+                     MotionSensor *motionSensor,
+                     unsigned long waveTime,
+                     unsigned long waveTravelSpeed,
+                     float minBrightness,
+                     float maxBrightness) : BaseScene("WaveScene",
+                                                      installation) {
     this->motionSensor = motionSensor;
     this->waveTime = waveTime;
     this->waveTravelSpeed = waveTravelSpeed;
