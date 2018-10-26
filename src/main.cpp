@@ -158,7 +158,12 @@ void changeScene(BaseScene *scene) {
 }
 
 void handleOsc(OSCMessage &msg) {
-    msg.dispatch("/til/scene/tree", [](OSCMessage &msg) {
-        //changeScene(&treeScene);
+    msg.dispatch("/til/brightness", [](OSCMessage &msg) {
+        auto brightness = msg.getFloat(0);
+        installation.setMaxBrightness(brightness);
+    });
+
+    msg.dispatch("/til/wave", [](OSCMessage &msg) {
+        waveScene.startWave();
     });
 }

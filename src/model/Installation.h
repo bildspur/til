@@ -4,10 +4,10 @@
 #include <EEPROM.h>
 #include <assert.h>
 #include "Luboid.h"
+#include "EEPROM.h"
 
 #define EEPROM_SIZE 0x80
-#define EEPROM_SIZE_ADDR 0x00
-#define EEPROM_DATA_ADDR 0x02
+#define EEPROM_ 0x00
 
 typedef Luboid *LuboidPtr;
 
@@ -33,6 +33,10 @@ public:
     LuboidPtr getLuboid(int index);
 
     void initLuboids();
+
+    void loadFromEEPROM();
+
+    void saveToEEPROM();
 
     void turnOn();
 

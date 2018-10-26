@@ -60,3 +60,11 @@ float Installation::getMaxBrightness() const {
 void Installation::setMaxBrightness(float ledMaxBrightness) {
     Installation::maxBrightness = ledMaxBrightness;
 }
+
+void Installation::loadFromEEPROM() {
+
+}
+
+void Installation::saveToEEPROM() {
+
+}

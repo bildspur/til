@@ -6,7 +6,7 @@ boolean isMcuAvailable = false;
 
 MicroControllerUnit mcu = new MicroControllerUnit(this, mcuPath);
 
-boolean debug = false;
+boolean debug = true;
 
 void setup()
 {
