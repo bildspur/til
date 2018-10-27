@@ -55,12 +55,14 @@ void loop() {
   setDmx(0);
   delay(5);
 
+  int intensity = 255;
+
   for (int i = 0; i < 33; i++)
   {
     Serial.print("Lighting up luboid ");
     Serial.println(i);
 
-    fadeDmxSensible(true, i, 1, 40, 4);
+    fadeDmxSensible(true, i, 1, intensity, 20);
   }
 
   for (int i = 0; i < 33; i++)
@@ -68,7 +70,7 @@ void loop() {
     Serial.print("Lighting up luboid ");
     Serial.println(i);
 
-    fadeDmxSensible(false, i, 1, 40, 4);
+    fadeDmxSensible(false, i, 1, intensity, 20);
   }
 
   setDmx(0);
