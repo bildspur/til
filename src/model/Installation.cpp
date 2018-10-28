@@ -3,7 +3,7 @@
 //
 
 #include "Installation.h"
-#include "../util/FloatUtil.h"
+#include "../util/MathUtils.h"
 
 Installation::Installation(uint16_t size, LuboidPtr *luboids) {
     this->size = size;

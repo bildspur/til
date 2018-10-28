@@ -4,7 +4,7 @@
 
 #include <esp_task_wdt.h>
 #include "DMXLightRenderer.h"
-#include "../../util/FloatUtil.h"
+#include "../../util/MathUtils.h"
 #include "../driver/LXESP32DMX/LXESP32DMX.h"
 
 DMXLightRenderer::DMXLightRenderer(uint8_t txPin, uint8_t lightAddressSize, Installation *installation,
@@ -39,7 +39,7 @@ void DMXLightRenderer::render(LuboidPtr luboid) {
 
     // convert to dmx
     auto dmxValue = static_cast<uint8_t>(lround(
-            FloatUtil::map(brightness, LUBOID_MIN_BRIGHTNESS, LUBOID_MAX_BRIGHTNESS, DMX_MIN_VALUE, DMX_MAX_VALUE)));
+            MathUtils::map(brightness, LUBOID_MIN_BRIGHTNESS, LUBOID_MAX_BRIGHTNESS, DMX_MIN_VALUE, DMX_MAX_VALUE)));
 
     // set dmx on all 4 channels
     for (int i = 0; i < lightChannelSize; i++) {

@@ -3,7 +3,7 @@
 //
 
 #include "LightRenderer.h"
-#include "../../util/FloatUtil.h"
+#include "../../util/MathUtils.h"
 
 LightRenderer::LightRenderer(Installation *installation) {
     this->installation = installation;
@@ -27,7 +27,7 @@ void LightRenderer::render(LuboidPtr luboid) {
 }
 
 float LightRenderer::mapToGlobalBrightnessRange(float value) {
-    return FloatUtil::map(value,
+    return MathUtils::map(value,
                           LUBOID_MIN_BRIGHTNESS, LUBOID_MAX_BRIGHTNESS,
                           installation->getMinBrightness(), installation->getMaxBrightness());
 }

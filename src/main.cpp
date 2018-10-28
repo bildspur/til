@@ -19,6 +19,7 @@
 #include "controller/sensor/interaction/MotionSensor.h"
 #include "controller/sensor/interaction/SerialMotionSensor.h"
 #include "controller/scene/star/TimeStarScene.h"
+#include "util/MathUtils.h"
 
 // global
 #define INSTALLATION_DEBUG true
@@ -176,7 +177,23 @@ void handleOsc(OSCMessage &msg) {
 }
 
 void sendRefresh() {
+    // global
     osc.send("/til/brightness/min", installation.getMinBrightness());
     osc.send("/til/brightness/max", installation.getMaxBrightness());
     osc.send("/til/scenemanager/on", sceneController.isRunning());
+
+    // time star
+    osc.send("/til/timestar/brightness/min", installation.getTimeStarMinBrightness());
+    osc.send("/til/timestar/brightness/max", installation.getTimeStarMaxBrightness());
+    osc.send("/til/timestar/randomFactor", installation.getTimeStarRandomOnFactor());
+    osc.send("/til/timestar/duration/min",
+             static_cast<float>(MathUtils::millisToSeconds(installation.getTimeStarMinDuration())));
+    osc.send("/til/timestar/duration/max",
+             static_cast<float>(MathUtils::millisToSeconds(installation.getTimeStarMaxDuration())));
+
+    // wave
+    osc.send("/til/wave/brightness/min", installation.getWaveMinBrightness());
+    osc.send("/til/wave/brightness/max", installation.getWaveMaxBrightness());
+    osc.send("/til/wave/duration", static_cast<float>(installation.getWaveDuration()));
+    osc.send("/til/wave/travelspeed", static_cast<float>(installation.getWaveTravelSpeed()));
 }

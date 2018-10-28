@@ -3,7 +3,7 @@
 //
 
 #include "TimeStar.h"
-#include "../../../util/FloatUtil.h"
+#include "../../../util/MathUtils.h"
 
 TimeStar::TimeStar() {
 
@@ -21,7 +21,7 @@ void TimeStar::start(unsigned long timeStamp, unsigned long duration) {
 float TimeStar::getBrightness(unsigned long timeStamp) {
     // calculate normalized time
     auto nvalue = (timeStamp - startTime) / (float) duration;
-    return FloatUtil::windowedSine(nvalue);
+    return MathUtils::windowedSine(nvalue);
 }
 
 

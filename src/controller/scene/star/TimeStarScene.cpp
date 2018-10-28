@@ -3,7 +3,7 @@
 //
 
 #include "TimeStarScene.h"
-#include "../../../util/FloatUtil.h"
+#include "../../../util/MathUtils.h"
 
 TimeStarScene::TimeStarScene(Installation *installation) : BaseScene(
         "TimeStarScene", installation) {
@@ -31,14 +31,14 @@ void TimeStarScene::loop() {
     // rnd stars
     for (auto i = 0; i < starCount; i++) {
         auto star = stars[i];
-        if (!star->isRunning(timeStamp) && FloatUtil::isRandomCalled(installation->getTimeStarRandomOnFactor())) {
+        if (!star->isRunning(timeStamp) && MathUtils::isRandomCalled(installation->getTimeStarRandomOnFactor())) {
             star->start(timeStamp, (unsigned long) lround(
                     random(installation->getTimeStarMinDuration(), random(installation->getTimeStarMaxDuration()))));
         }
 
         // update
         float brightness = star->getBrightness(timeStamp);
-        float clampedBrightness = FloatUtil::mapFromLEDBrightness(brightness, installation->getTimeStarMinBrightness(),
+        float clampedBrightness = MathUtils::mapFromLEDBrightness(brightness, installation->getTimeStarMinBrightness(),
                                                                   installation->getTimeStarMaxBrightness());
         installation->getLuboid(i)->setBrightness(clampedBrightness);
     }

@@ -3,7 +3,7 @@
 //
 
 #include "WaveScene.h"
-#include "../../util/FloatUtil.h"
+#include "../../util/MathUtils.h"
 
 WaveScene::WaveScene(Installation *installation,
                      MotionSensor *motionSensor) : BaseScene("WaveScene",
@@ -65,8 +65,8 @@ bool WaveScene::updateLuboid(LuboidPtr luboid, unsigned long timeDiff) {
         return false;
 
     // get brightness and update
-    float brightness = FloatUtil::windowedSine(x);
-    float clamped = FloatUtil::mapFromLEDBrightness(brightness, installation->getWaveMinBrightness(),
+    float brightness = MathUtils::windowedSine(x);
+    float clamped = MathUtils::mapFromLEDBrightness(brightness, installation->getWaveMinBrightness(),
                                                     installation->getWaveMaxBrightness());
     luboid->setBrightness(clamped);
     return true;

@@ -4,7 +4,7 @@
 
 #include <Arduino.h>
 #include "StarScene.h"
-#include "../../util/FloatUtil.h"
+#include "../../util/MathUtils.h"
 
 StarScene::StarScene(Installation *installation) : BaseScene("StarScene", installation) {
     // init seed
@@ -29,10 +29,10 @@ void StarScene::loop() {
 
         // check if leaf is on
         if (luboid->getBrightness() > 0.75) {
-            if (FloatUtil::isRandomCalled(RANDOM_OFF_FACTOR))
+            if (MathUtils::isRandomCalled(RANDOM_OFF_FACTOR))
                 luboid->turnOff();
         } else {
-            if (FloatUtil::isRandomCalled(RANDOM_ON_FACTOR))
+            if (MathUtils::isRandomCalled(RANDOM_ON_FACTOR))
                 luboid->setBrightness(static_cast<float>(random(50, 100) / 100.0));
         }
     }

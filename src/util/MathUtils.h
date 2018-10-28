@@ -6,9 +6,9 @@
 #define SILVA_FLOATUTIL_H
 
 
-class FloatUtil {
+class MathUtils {
 protected:
-    FloatUtil();
+    MathUtils();
 
 public:
     static float map(float value, float minIn, float maxIn, float minOut, float maxOut);
@@ -21,9 +21,9 @@ public:
 
     static float mapFromLEDBrightness(float value, float minValue, float maxValue);
 
-    static float secondsToMillis(float seconds);
+    static unsigned long secondsToMillis(unsigned long seconds);
 
-    static float millisToSeconds(float millis);
+    static unsigned long millisToSeconds(unsigned long millis);
 };
 
 
