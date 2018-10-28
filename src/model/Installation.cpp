@@ -108,3 +108,35 @@ float Installation::getTimeStarMaxBrightness() const {
 void Installation::setTimeStarMaxBrightness(float timeStarMaxBrightness) {
     Installation::timeStarMaxBrightness = timeStarMaxBrightness;
 }
+
+unsigned long Installation::getWaveDuration() const {
+    return waveDuration;
+}
+
+void Installation::setWaveDuration(unsigned long waveTime) {
+    Installation::waveDuration = waveTime;
+}
+
+unsigned long Installation::getWaveTravelSpeed() const {
+    return waveTravelSpeed;
+}
+
+void Installation::setWaveTravelSpeed(unsigned long waveTravelSpeed) {
+    Installation::waveTravelSpeed = waveTravelSpeed;
+}
+
+float Installation::getWaveMinBrightness() const {
+    return waveMinBrightness;
+}
+
+void Installation::setWaveMinBrightness(float waveMinBrightness) {
+    Installation::waveMinBrightness = waveMinBrightness;
+}
+
+float Installation::getWaveMaxBrightness() const {
+    return waveMaxBrightness;
+}
+
+void Installation::setWaveMaxBrightness(float waveMaxBrightness) {
+    Installation::waveMaxBrightness = waveMaxBrightness;
+}

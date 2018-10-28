@@ -49,12 +49,6 @@
 #define DMX_TX_PIN 2
 #define DMX_LIGHT_ADDRESS_SIZE 4
 
-// wave (ms)
-#define WAVE_TIME 3000
-#define WAVE_TRAVEL_SPEED 500
-#define WAVE_MIN_BRIGHTNESS 0.0f
-#define WAVE_MAX_BRIGHTNESS 1.0f
-
 // typedefs
 typedef BaseController *BaseControllerPtr;
 typedef Luboid *LuboidPtr;
@@ -78,11 +72,7 @@ MotionSensor *motionSensor = new SerialMotionSensor(MOTION_RX_PIN, MOTION_BAUD_R
 // scenes
 //StarScene starScene = StarScene(&installation);
 TimeStarScene timeStarScene = TimeStarScene(&installation);
-WaveScene waveScene = WaveScene(&installation, motionSensor,
-                                WAVE_TIME,
-                                WAVE_TRAVEL_SPEED,
-                                WAVE_MIN_BRIGHTNESS,
-                                WAVE_MAX_BRIGHTNESS);
+WaveScene waveScene = WaveScene(&installation, motionSensor);
 
 auto sceneController = SceneController(&timeStarScene);
 

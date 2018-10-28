@@ -33,6 +33,15 @@ private:
 
     float timeStarMaxBrightness = 0.2f;
 
+    // wave settings
+    unsigned long waveDuration = 3000L;
+
+    unsigned long waveTravelSpeed = 500L;
+
+    float waveMinBrightness = 0.0f;
+
+    float waveMaxBrightness = 0.2f;
+
 public:
     Installation(uint16_t size, LuboidPtr *luboids);
 
@@ -81,6 +90,22 @@ public:
     float getTimeStarMaxBrightness() const;
 
     void setTimeStarMaxBrightness(float timeStarMaxBrightness);
+
+    unsigned long getWaveDuration() const;
+
+    void setWaveDuration(unsigned long waveTime);
+
+    unsigned long getWaveTravelSpeed() const;
+
+    void setWaveTravelSpeed(unsigned long waveTravelSpeed);
+
+    float getWaveMinBrightness() const;
+
+    void setWaveMinBrightness(float waveMinBrightness);
+
+    float getWaveMaxBrightness() const;
+
+    void setWaveMaxBrightness(float waveMaxBrightness);
 };
 
 

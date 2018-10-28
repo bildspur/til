@@ -18,17 +18,10 @@ private:
     unsigned long waves[MAX_WAVES];
     uint8_t nextWaveIndex = 0;
 
-    unsigned long waveTime;
-    unsigned long waveTravelSpeed;
-
     bool updateLuboid(LuboidPtr luboid, unsigned long timeDiff);
 
-    float minBrightness;
-    float maxBrightness;
-
 public:
-    explicit WaveScene(Installation *installation, MotionSensor *motionSensor, unsigned long waveTime,
-                       unsigned long waveTravelSpeed, float minBrightness = 0.0f, float maxBrightness = 1.0f);
+    explicit WaveScene(Installation *installation, MotionSensor *motionSensor);
 
     void setup() override;
 

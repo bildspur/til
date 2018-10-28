@@ -6,17 +6,9 @@
 #include "../../util/FloatUtil.h"
 
 WaveScene::WaveScene(Installation *installation,
-                     MotionSensor *motionSensor,
-                     unsigned long waveTime,
-                     unsigned long waveTravelSpeed,
-                     float minBrightness,
-                     float maxBrightness) : BaseScene("WaveScene",
-                                                      installation) {
-    this->motionSensor = motionSensor;
-    this->waveTime = waveTime;
-    this->waveTravelSpeed = waveTravelSpeed;
-    this->minBrightness = minBrightness;
-    this->maxBrightness = maxBrightness;
+                     MotionSensor *motionSensor) : BaseScene("WaveScene",
+                                                             installation) {
+    this->motionSensor = motionSensor;;
 }
 
 void WaveScene::setup() {
@@ -60,13 +52,13 @@ void WaveScene::loop() {
 
 bool WaveScene::updateLuboid(LuboidPtr luboid, unsigned long timeDiff) {
     // do nothing till nmt relevant
-    auto ldiff = timeDiff - (luboid->getId() * waveTravelSpeed);
+    auto ldiff = timeDiff - (luboid->getId() * installation->getWaveTravelSpeed());
 
     // wave relevant but not yet
     if (ldiff < 0L)
         return true;
 
-    float x = ldiff / (float) waveTime;
+    float x = ldiff / (float) installation->getWaveDuration();
 
     // wave not relevant anymore
     if (x > 1.0f)
@@ -74,7 +66,8 @@ bool WaveScene::updateLuboid(LuboidPtr luboid, unsigned long timeDiff) {
 
     // get brightness and update
     float brightness = FloatUtil::windowedSine(x);
-    float clamped = FloatUtil::mapFromLEDBrightness(brightness, minBrightness, maxBrightness);
+    float clamped = FloatUtil::mapFromLEDBrightness(brightness, installation->getWaveMinBrightness(),
+                                                    installation->getWaveMaxBrightness());
     luboid->setBrightness(clamped);
     return true;
 }
