@@ -139,22 +139,58 @@ void changeScene(BaseScene *scene) {
 }
 
 void handleOsc(OSCMessage &msg) {
+    // global
     msg.dispatch("/til/brightness/min", [](OSCMessage &msg) {
-        auto brightness = msg.getFloat(0);
-        installation.setMinBrightness(brightness);
+        installation.setMinBrightness(msg.getFloat(0));
     });
 
     msg.dispatch("/til/brightness/max", [](OSCMessage &msg) {
-        auto brightness = msg.getFloat(0);
-        installation.setMaxBrightness(brightness);
+        installation.setMaxBrightness(msg.getFloat(0));
     });
 
     msg.dispatch("/til/scenemanager/on", [](OSCMessage &msg) {
-        auto isOn = msg.getFloat(0);
-        sceneController.setRunning(isOn > 0.5f);
-        sendRefresh();
+        sceneController.setRunning(msg.getFloat(0) > 0.5f);
     });
 
+    // time star
+    msg.dispatch("/til/timestar/brightness/min", [](OSCMessage &msg) {
+        installation.setTimeStarMinBrightness(msg.getFloat(0));
+    });
+
+    msg.dispatch("/til/timestar/brightness/max", [](OSCMessage &msg) {
+        installation.setTimeStarMaxBrightness(msg.getFloat(0));
+    });
+
+    msg.dispatch("/til/timestar/randomFactor", [](OSCMessage &msg) {
+        installation.setTimeStarRandomOnFactor(msg.getFloat(0));
+    });
+
+    msg.dispatch("/til/timestar/duration/min", [](OSCMessage &msg) {
+        installation.setTimeStarMinDuration(MathUtils::secondsToMillis(static_cast<unsigned long>(msg.getFloat(0))));
+    });
+
+    msg.dispatch("/til/timestar/duration/max", [](OSCMessage &msg) {
+        installation.setTimeStarMaxDuration(MathUtils::secondsToMillis(static_cast<unsigned long>(msg.getFloat(0))));
+    });
+
+    // wave
+    msg.dispatch("/til/wave/brightness/min", [](OSCMessage &msg) {
+        installation.setWaveMinBrightness(msg.getFloat(0));
+    });
+
+    msg.dispatch("/til/wave/brightness/max", [](OSCMessage &msg) {
+        installation.setWaveMaxBrightness(msg.getFloat(0));
+    });
+
+    msg.dispatch("/til/wave/duration", [](OSCMessage &msg) {
+        installation.setWaveDuration(msg.getFloat(0));
+    });
+
+    msg.dispatch("/til/wave/travelspeed", [](OSCMessage &msg) {
+        installation.setWaveTravelSpeed(msg.getFloat(0));
+    });
+
+    // controls
     msg.dispatch("/til/installation/on", [](OSCMessage &msg) {
         installation.turnOn();
     });
@@ -174,6 +210,8 @@ void handleOsc(OSCMessage &msg) {
     msg.dispatch("/til/refresh", [](OSCMessage &msg) {
         sendRefresh();
     });
+
+    sendRefresh();
 }
 
 void sendRefresh() {
