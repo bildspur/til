@@ -82,7 +82,7 @@ BaseControllerPtr controllers[] = {
         &network,
         &ota,
         &osc,
-        debugRenderer,
+        //debugRenderer,
         renderer,
         motionSensor,
         &sceneController,
@@ -209,6 +209,17 @@ void handleOsc(OSCMessage &msg) {
 
     msg.dispatch("/til/refresh", [](OSCMessage &msg) {
         sendRefresh();
+    });
+
+    msg.dispatch("/til/settings/load", [](OSCMessage &msg) {
+        installation.loadFromEEPROM();
+        osc.send("/til/status", "Status: loaded!");
+        ESP.restart();
+    });
+
+    msg.dispatch("/til/settings/save", [](OSCMessage &msg) {
+        installation.saveToEEPROM();
+        osc.send("/til/status", "Status: saved!");
     });
 
     sendRefresh();

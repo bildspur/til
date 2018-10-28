@@ -45,6 +45,103 @@ void Installation::turnOff() {
     }
 }
 
+void Installation::loadFromEEPROM() {
+    if (!EEPROM.begin(EEPROM_SIZE)) {
+        Serial.println("failed to initialise EEPROM");
+        return;
+    }
+
+    // set start address
+    int address = EEPROM_START_ADDRESS;
+
+    // global
+    minBrightness = EEPROM.readFloat(address);
+    address += sizeof(float);
+
+    maxBrightness = EEPROM.readFloat(address);
+    address += sizeof(float);
+
+    // time star pattern
+    timeStarMinDuration = EEPROM.readULong(address);
+    address += sizeof(unsigned long);
+
+    timeStarMaxDuration = EEPROM.readULong(address);
+    address += sizeof(unsigned long);
+
+    timeStarRandomOnFactor = EEPROM.readFloat(address);
+    address += sizeof(float);
+
+    timeStarMinBrightness = EEPROM.readFloat(address);
+    address += sizeof(float);
+
+    timeStarMaxBrightness = EEPROM.readFloat(address);
+    address += sizeof(float);
+
+    // wave
+    waveDuration = EEPROM.readULong(address);
+    address += sizeof(unsigned long);
+
+    waveTravelSpeed = EEPROM.readULong(address);
+    address += sizeof(unsigned long);
+
+    waveMinBrightness = EEPROM.readFloat(address);
+    address += sizeof(float);
+
+    waveMaxBrightness = EEPROM.readFloat(address);
+
+    // end
+    EEPROM.end();
+}
+
+void Installation::saveToEEPROM() {
+    if (!EEPROM.begin(EEPROM_SIZE)) {
+        Serial.println("failed to initialise EEPROM");
+        return;
+    }
+
+    // set start address
+    int address = EEPROM_START_ADDRESS;
+
+    // global
+    EEPROM.writeFloat(address, minBrightness);
+    address += sizeof(float);
+
+    EEPROM.writeFloat(address, maxBrightness);
+    address += sizeof(float);
+
+    // time star pattern
+    EEPROM.writeULong(address, timeStarMinDuration);
+    address += sizeof(unsigned long);
+
+    EEPROM.writeULong(address, timeStarMaxDuration);
+    address += sizeof(unsigned long);
+
+    EEPROM.writeFloat(address, timeStarRandomOnFactor);
+    address += sizeof(float);
+
+    EEPROM.writeFloat(address, timeStarMinBrightness);
+    address += sizeof(float);
+
+    EEPROM.writeFloat(address, timeStarMaxBrightness);
+    address += sizeof(float);
+
+    // wave
+    EEPROM.writeULong(address, waveDuration);
+    address += sizeof(unsigned long);
+
+    EEPROM.writeULong(address, waveTravelSpeed);
+    address += sizeof(unsigned long);
+
+    EEPROM.writeFloat(address, waveMinBrightness);
+    address += sizeof(float);
+
+    EEPROM.writeFloat(address, waveMaxBrightness);
+
+    // save
+    EEPROM.commit();
+    EEPROM.end();
+}
+
 float Installation::getMinBrightness() const {
     return minBrightness;
 }
@@ -59,14 +156,6 @@ float Installation::getMaxBrightness() const {
 
 void Installation::setMaxBrightness(float ledMaxBrightness) {
     Installation::maxBrightness = ledMaxBrightness;
-}
-
-void Installation::loadFromEEPROM() {
-
-}
-
-void Installation::saveToEEPROM() {
-
 }
 
 unsigned long Installation::getTimeStarMinDuration() const {
