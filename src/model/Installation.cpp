@@ -55,39 +55,39 @@ void Installation::loadFromEEPROM() {
     int address = EEPROM_START_ADDRESS;
 
     // global
-    minBrightness = EEPROM.readFloat(address);
+    EEPROM.get(address, minBrightness);
     address += sizeof(float);
 
-    maxBrightness = EEPROM.readFloat(address);
+    EEPROM.get(address, maxBrightness);
     address += sizeof(float);
 
     // time star pattern
-    timeStarMinDuration = EEPROM.readULong(address);
+    EEPROM.get(address, timeStarMinDuration);
     address += sizeof(unsigned long);
 
-    timeStarMaxDuration = EEPROM.readULong(address);
+    EEPROM.get(address, timeStarMaxDuration);
     address += sizeof(unsigned long);
 
-    timeStarRandomOnFactor = EEPROM.readFloat(address);
+    EEPROM.get(address, timeStarRandomOnFactor);
     address += sizeof(float);
 
-    timeStarMinBrightness = EEPROM.readFloat(address);
+    EEPROM.get(address, timeStarMinBrightness);
     address += sizeof(float);
 
-    timeStarMaxBrightness = EEPROM.readFloat(address);
+    EEPROM.get(address, timeStarMaxBrightness);
     address += sizeof(float);
 
     // wave
-    waveDuration = EEPROM.readULong(address);
+    EEPROM.get(address, waveDuration);
     address += sizeof(unsigned long);
 
-    waveTravelSpeed = EEPROM.readULong(address);
+    EEPROM.get(address, waveTravelSpeed);
     address += sizeof(unsigned long);
 
-    waveMinBrightness = EEPROM.readFloat(address);
+    EEPROM.get(address, waveMinBrightness);
     address += sizeof(float);
 
-    waveMaxBrightness = EEPROM.readFloat(address);
+    EEPROM.get(address, waveMaxBrightness);
 
     // end
     EEPROM.end();
@@ -103,39 +103,39 @@ void Installation::saveToEEPROM() {
     int address = EEPROM_START_ADDRESS;
 
     // global
-    EEPROM.writeFloat(address, minBrightness);
+    EEPROM.put(address, minBrightness);
     address += sizeof(float);
 
-    EEPROM.writeFloat(address, maxBrightness);
+    EEPROM.put(address, maxBrightness);
     address += sizeof(float);
 
     // time star pattern
-    EEPROM.writeULong(address, timeStarMinDuration);
+    EEPROM.put(address, timeStarMinDuration);
     address += sizeof(unsigned long);
 
-    EEPROM.writeULong(address, timeStarMaxDuration);
+    EEPROM.put(address, timeStarMaxDuration);
     address += sizeof(unsigned long);
 
-    EEPROM.writeFloat(address, timeStarRandomOnFactor);
+    EEPROM.put(address, timeStarRandomOnFactor);
     address += sizeof(float);
 
-    EEPROM.writeFloat(address, timeStarMinBrightness);
+    EEPROM.put(address, timeStarMinBrightness);
     address += sizeof(float);
 
-    EEPROM.writeFloat(address, timeStarMaxBrightness);
+    EEPROM.put(address, timeStarMaxBrightness);
     address += sizeof(float);
 
     // wave
-    EEPROM.writeULong(address, waveDuration);
+    EEPROM.put(address, waveDuration);
     address += sizeof(unsigned long);
 
-    EEPROM.writeULong(address, waveTravelSpeed);
+    EEPROM.put(address, waveTravelSpeed);
     address += sizeof(unsigned long);
 
-    EEPROM.writeFloat(address, waveMinBrightness);
+    EEPROM.put(address, waveMinBrightness);
     address += sizeof(float);
 
-    EEPROM.writeFloat(address, waveMaxBrightness);
+    EEPROM.put(address, waveMaxBrightness);
 
     // save
     EEPROM.commit();

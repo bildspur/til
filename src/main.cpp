@@ -109,6 +109,9 @@ void setup() {
     // setup luboids
     installation.initLuboids();
 
+    // load settings
+    installation.loadFromEEPROM();
+
     // setup controllers
     for (auto &controller : controllers) {
         controller->setup();
@@ -214,7 +217,6 @@ void handleOsc(OSCMessage &msg) {
     msg.dispatch("/til/settings/load", [](OSCMessage &msg) {
         installation.loadFromEEPROM();
         osc.send("/til/status", "Status: loaded!");
-        ESP.restart();
     });
 
     msg.dispatch("/til/settings/save", [](OSCMessage &msg) {
