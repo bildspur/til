@@ -11,8 +11,8 @@ sensor.set_auto_whitebal(True)
 clock = time.clock()                # Create a clock object to track the FPS.
 
 # windowing
-window_width = 200
-window_height = 240
+window_width = 320 # max 320
+window_height = 150 # max 240
 roi = ((sensor.width() / 2) - (window_width / 2), (sensor.height() / 2) - (window_height / 2), window_width, window_height)
 sensor.set_windowing((int(roi[0]), int(roi[1]), int(roi[2]), int(roi[3])))
 
@@ -35,21 +35,24 @@ trigger_threshold = 5
 show_debug = True
 debug_color = (0, 0, 0)
 min_mo_life_to_show = 5
+debug_detected_duration = 50
+debug_detected_counter = debug_detected_duration
+debug_detected_msg = ""
 
 # blob detection
 blob_threshold = (5, 255)
-pixels_threshold = 150
-area_threshold = 2500
+pixels_threshold = 100
+area_threshold = 2000
 
 # tracking
-tracking_distance_threshold = 150
+tracking_distance_threshold = 100
 tracking_area_threshold = 100000 # remove tracking area as distinguisher
 moving_objects = []
 last_frame_triggered = False
 
 # trigger
 min_life = 10
-min_distance = 150
+min_distance = 120
 
 # start of  main
 ir_leds.on()
@@ -76,6 +79,12 @@ def trigger_movement(moving_objects):
 
             # light up led
             blink_led(red_led if direction[0] else blue_led)
+
+            if show_debug:
+                global debug_detected_counter
+                global debug_detected_msg
+                debug_detected_counter = 0
+                debug_detected_msg = "%s" % ("Right" if direction[0] else "Left")
 
             # send UART
             if direction[0]:
@@ -170,7 +179,14 @@ while(True):
     # display blobs debug info
     if show_debug:
         # show tracked mo's
-        img.draw_string(20, 20, "MO:%s" % (len(moving_objects)), scale=2, color=debug_color)
+        debug_text = "MO:%s" % (len(moving_objects))
+
+        # show detected
+        if debug_detected_duration > debug_detected_counter:
+            debug_text += "D: %s" % debug_detected_msg
+
+        debug_detected_counter += 1
+        img.draw_string(20, 20, debug_text, scale=2, color=debug_color)
 
         # show blobs and distance
         for mo in moving_objects:
