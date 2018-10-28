@@ -10,8 +10,13 @@ sensor.skip_frames(time = 500)     # Wait for settings take effect.
 sensor.set_auto_whitebal(True)
 clock = time.clock()                # Create a clock object to track the FPS.
 
+# windowing
+window_width = 200
+window_height = 240
+roi = ((sensor.width() / 2) - (window_width / 2), (sensor.height() / 2) - (window_height / 2), window_width, window_height)
+sensor.set_windowing((int(roi[0]), int(roi[1]), int(roi[2]), int(roi[3])))
 # variables
-extra_fb = sensor.alloc_extra_fb(sensor.width(), sensor.height(), sensor.GRAYSCALE)
+extra_fb = sensor.alloc_extra_fb(window_width, window_height, sensor.GRAYSCALE)
 uart = pyb.UART(3, 9600, timeout_char = 1000)
 
 red_led = pyb.LED(1)
