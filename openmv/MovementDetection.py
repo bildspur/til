@@ -29,11 +29,12 @@ trigger_threshold = 5
 # debug
 show_debug = True
 debug_color = (0, 0, 0)
+min_mo_life_to_show = 5
 
 # blob detection
 blob_threshold = (5, 255)
-pixels_threshold = 250
-area_threshold = 5000
+pixels_threshold = 150
+area_threshold = 2500
 
 # tracking
 tracking_distance_threshold = 150
@@ -168,11 +169,12 @@ while(True):
 
         # show blobs and distance
         for mo in moving_objects:
-            img.draw_arrow(mo.start_position[0], mo.start_position[1], mo.blob.cx(), mo.blob.cy())
-            img.draw_string(mo.blob.cx(), mo.blob.cy(), "%s" % (mo.moved_distance()))
+            if mo.life >= min_mo_life_to_show:
+                img.draw_arrow(mo.start_position[0], mo.start_position[1], mo.blob.cx(), mo.blob.cy())
+                img.draw_string(mo.blob.cx(), mo.blob.cy(), "%s" % (mo.moved_distance()))
 
-            img.draw_rectangle(mo.blob.rect())
-            img.draw_cross(mo.blob.cx(), mo.blob.cy())
+                img.draw_rectangle(mo.blob.rect())
+                img.draw_cross(mo.blob.cx(), mo.blob.cy())
 
 
     # update framebuffer
