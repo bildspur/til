@@ -31,6 +31,8 @@ void setup() {
   setDmx(0);
 
   Serial.println("finished!");
+
+  delay(5000);
 }
 
 void writeController(int channel, int value)
@@ -62,15 +64,17 @@ void loop() {
     Serial.print("Lighting up luboid ");
     Serial.println(i);
 
-    fadeDmxSensible(true, i, 1, intensity, 20);
+    fadeDmxSensible(true, i, 1, intensity, 85);
   }
+
+  delay(5000);
 
   for (int i = 0; i < 33; i++)
   {
-    Serial.print("Lighting up luboid ");
+    Serial.print("Turing off luboid ");
     Serial.println(i);
 
-    fadeDmxSensible(false, i, 1, intensity, 20);
+    fadeDmxSensible(false, i, 1, intensity, 85);
   }
 
   setDmx(0);
