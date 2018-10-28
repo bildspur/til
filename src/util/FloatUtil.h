@@ -20,6 +20,10 @@ public:
     static bool isRandomCalled(float factor);
 
     static float mapFromLEDBrightness(float value, float minValue, float maxValue);
+
+    static float secondsToMillis(float seconds);
+
+    static float millisToSeconds(float millis);
 };
 
 

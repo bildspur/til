@@ -68,3 +68,43 @@ void Installation::loadFromEEPROM() {
 void Installation::saveToEEPROM() {
 
 }
+
+unsigned long Installation::getTimeStarMinDuration() const {
+    return timeStarMinDuration;
+}
+
+void Installation::setTimeStarMinDuration(unsigned long timeStarMinDuration) {
+    Installation::timeStarMinDuration = timeStarMinDuration;
+}
+
+unsigned long Installation::getTimeStarMaxDuration() const {
+    return timeStarMaxDuration;
+}
+
+void Installation::setTimeStarMaxDuration(unsigned long timeStarMaxDuration) {
+    Installation::timeStarMaxDuration = timeStarMaxDuration;
+}
+
+float Installation::getTimeStarRandomOnFactor() const {
+    return timeStarRandomOnFactor;
+}
+
+void Installation::setTimeStarRandomOnFactor(float timeStarRandomOnFactor) {
+    Installation::timeStarRandomOnFactor = timeStarRandomOnFactor;
+}
+
+float Installation::getTimeStarMinBrightness() const {
+    return timeStarMinBrightness;
+}
+
+void Installation::setTimeStarMinBrightness(float timeStarMinBrightness) {
+    Installation::timeStarMinBrightness = timeStarMinBrightness;
+}
+
+float Installation::getTimeStarMaxBrightness() const {
+    return timeStarMaxBrightness;
+}
+
+void Installation::setTimeStarMaxBrightness(float timeStarMaxBrightness) {
+    Installation::timeStarMaxBrightness = timeStarMaxBrightness;
+}

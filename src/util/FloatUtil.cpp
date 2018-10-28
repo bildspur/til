@@ -31,3 +31,11 @@ bool FloatUtil::isRandomCalled(float factor) {
 float FloatUtil::mapFromLEDBrightness(float value, float minValue, float maxValue) {
     return FloatUtil::map(value, LUBOID_MIN_BRIGHTNESS, LUBOID_MAX_BRIGHTNESS, minValue, maxValue);
 }
+
+float FloatUtil::millisToSeconds(float millis) {
+    return millis / 1000;
+}
+
+float FloatUtil::secondsToMillis(float seconds) {
+    return seconds * 1000;
+}

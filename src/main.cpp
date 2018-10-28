@@ -49,13 +49,6 @@
 #define DMX_TX_PIN 2
 #define DMX_LIGHT_ADDRESS_SIZE 4
 
-// time star scene
-#define TIME_STAR_MIN_DURATION 10000L
-#define TIME_STAR_MAX_DURATION 50000L
-#define TIME_STAR_RANDOM_ON_FACTOR 0.99f
-#define TIME_STAR_MIN_BRIGHTNESS 0.0f
-#define TIME_STAR_MAX_BRIGHTNESS 0.2f
-
 // wave (ms)
 #define WAVE_TIME 3000
 #define WAVE_TRAVEL_SPEED 500
@@ -84,12 +77,7 @@ MotionSensor *motionSensor = new SerialMotionSensor(MOTION_RX_PIN, MOTION_BAUD_R
 
 // scenes
 //StarScene starScene = StarScene(&installation);
-TimeStarScene timeStarScene = TimeStarScene(&installation,
-                                            TIME_STAR_MIN_DURATION,
-                                            TIME_STAR_MAX_DURATION,
-                                            TIME_STAR_RANDOM_ON_FACTOR,
-                                            TIME_STAR_MIN_BRIGHTNESS,
-                                            TIME_STAR_MAX_BRIGHTNESS);
+TimeStarScene timeStarScene = TimeStarScene(&installation);
 WaveScene waveScene = WaveScene(&installation, motionSensor,
                                 WAVE_TIME,
                                 WAVE_TRAVEL_SPEED,

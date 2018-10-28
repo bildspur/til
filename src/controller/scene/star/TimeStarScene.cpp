@@ -5,18 +5,8 @@
 #include "TimeStarScene.h"
 #include "../../../util/FloatUtil.h"
 
-TimeStarScene::TimeStarScene(Installation *installation,
-                             unsigned long minDuration,
-                             unsigned long maxDuration,
-                             float randomOnFactor,
-                             float minBrightness,
-                             float maxBrightness) : BaseScene(
+TimeStarScene::TimeStarScene(Installation *installation) : BaseScene(
         "TimeStarScene", installation) {
-    this->minDuration = minDuration;
-    this->maxDuration = maxDuration;
-    this->randomOnFactor = randomOnFactor;
-    this->minBrightness = minBrightness;
-    this->maxBrightness = maxBrightness;
 }
 
 
@@ -41,13 +31,15 @@ void TimeStarScene::loop() {
     // rnd stars
     for (auto i = 0; i < starCount; i++) {
         auto star = stars[i];
-        if (!star->isRunning(timeStamp) && FloatUtil::isRandomCalled(randomOnFactor)) {
-            star->start(timeStamp, (unsigned long) lround(random(minDuration, maxDuration)));
+        if (!star->isRunning(timeStamp) && FloatUtil::isRandomCalled(installation->getTimeStarRandomOnFactor())) {
+            star->start(timeStamp, (unsigned long) lround(
+                    random(installation->getTimeStarMinDuration(), random(installation->getTimeStarMaxDuration()))));
         }
 
         // update
         float brightness = star->getBrightness(timeStamp);
-        float clampedBrightness = FloatUtil::mapFromLEDBrightness(brightness, minBrightness, maxBrightness);
+        float clampedBrightness = FloatUtil::mapFromLEDBrightness(brightness, installation->getTimeStarMinBrightness(),
+                                                                  installation->getTimeStarMaxBrightness());
         installation->getLuboid(i)->setBrightness(clampedBrightness);
     }
 }

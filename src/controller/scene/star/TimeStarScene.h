@@ -13,25 +13,12 @@ class TimeStarScene : public BaseScene {
 private:
     typedef TimeStar *TimeStarPtr;
 
-    float randomOnFactor;
-
-    float minBrightness;
-    float maxBrightness;
-
-    unsigned long minDuration;
-    unsigned long maxDuration;
-
     uint16_t starCount;
 
     TimeStarPtr *stars;
 
 public:
-    explicit TimeStarScene(Installation *installation,
-                           unsigned long minDuration,
-                           unsigned long maxDuration,
-                           float randomOnFactor = 0.95f,
-                           float minBrightness = 0.0f,
-                           float maxBrightness = 1.0f);
+    explicit TimeStarScene(Installation *installation);
 
     void setup() override;
 

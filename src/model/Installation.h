@@ -17,9 +17,21 @@ private:
 
     uint16_t size;
 
+    // global settings
     float minBrightness = 0.0f;
 
     float maxBrightness = 1.0f;
+
+    // time star scene settings
+    unsigned long timeStarMinDuration = 10000L;
+
+    unsigned long timeStarMaxDuration = 50000L;
+
+    float timeStarRandomOnFactor = 0.99f;
+
+    float timeStarMinBrightness = 0.0f;
+
+    float timeStarMaxBrightness = 0.2f;
 
 public:
     Installation(uint16_t size, LuboidPtr *luboids);
@@ -49,6 +61,26 @@ public:
     float getMaxBrightness() const;
 
     void setMaxBrightness(float ledMaxBrightness);
+
+    unsigned long getTimeStarMinDuration() const;
+
+    void setTimeStarMinDuration(unsigned long timeStarMinDuration);
+
+    unsigned long getTimeStarMaxDuration() const;
+
+    void setTimeStarMaxDuration(unsigned long timeStarMaxDuration);
+
+    float getTimeStarRandomOnFactor() const;
+
+    void setTimeStarRandomOnFactor(float timeStarRandomOnFactor);
+
+    float getTimeStarMinBrightness() const;
+
+    void setTimeStarMinBrightness(float timeStarMinBrightness);
+
+    float getTimeStarMaxBrightness() const;
+
+    void setTimeStarMaxBrightness(float timeStarMaxBrightness);
 };
 
 
