@@ -149,7 +149,7 @@ void handleOsc(OSCMessage &msg) {
     });
 
     msg.dispatch("/til/scenemanager/on", [](OSCMessage &msg) {
-        sceneController.setRunning(msg.getFloat(0) > 0.5f);
+        sceneController.setRunning(!sceneController.isRunning());
     });
 
     // time star
