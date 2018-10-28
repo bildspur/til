@@ -10,6 +10,7 @@
 #define LUBOID_MIN_BRIGHTNESS 0.0f
 #define LUBOID_MAX_BRIGHTNESS 1.0f
 
+// todo: set right easing speed for framerate
 #define EASING_SPEED 0.1
 
 class Luboid {

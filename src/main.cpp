@@ -96,7 +96,6 @@ void changeScene(BaseScene *scene);
 
 void sendRefresh();
 
-
 void setup() {
     Serial.begin(BAUD_RATE);
 
@@ -121,6 +120,7 @@ void setup() {
     MDNS.addService("_osc", "_udp", OSC_IN_PORT);
 
     Serial.println("setup finished!");
+    sendRefresh();
 }
 
 void loop() {
