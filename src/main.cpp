@@ -50,11 +50,11 @@
 #define DMX_LIGHT_ADDRESS_SIZE 4
 
 // time star scene
-#define TIME_STAR_MIN_DURATION 5000L
-#define TIME_STAR_MAX_DURATION 10000L
+#define TIME_STAR_MIN_DURATION 10000L
+#define TIME_STAR_MAX_DURATION 50000L
 #define TIME_STAR_RANDOM_ON_FACTOR 0.99f
 #define TIME_STAR_MIN_BRIGHTNESS 0.0f
-#define TIME_STAR_MAX_BRIGHTNESS 1.0f
+#define TIME_STAR_MAX_BRIGHTNESS 0.2f
 
 // wave (ms)
 #define WAVE_TIME 3000
@@ -116,6 +116,8 @@ void handleOsc(OSCMessage &msg);
 
 void changeScene(BaseScene *scene);
 
+void sendRefresh();
+
 
 void setup() {
     Serial.begin(BAUD_RATE);
@@ -158,12 +160,45 @@ void changeScene(BaseScene *scene) {
 }
 
 void handleOsc(OSCMessage &msg) {
-    msg.dispatch("/til/brightness", [](OSCMessage &msg) {
+    msg.dispatch("/til/brightness/min", [](OSCMessage &msg) {
+        auto brightness = msg.getFloat(0);
+        installation.setMinBrightness(brightness);
+    });
+
+    msg.dispatch("/til/brightness/max", [](OSCMessage &msg) {
         auto brightness = msg.getFloat(0);
         installation.setMaxBrightness(brightness);
+    });
+
+    msg.dispatch("/til/scenemanager/on", [](OSCMessage &msg) {
+        auto isOn = msg.getFloat(0);
+        sceneController.setRunning(isOn > 0.5f);
+        sendRefresh();
+    });
+
+    msg.dispatch("/til/installation/on", [](OSCMessage &msg) {
+        installation.turnOn();
+    });
+
+    msg.dispatch("/til/installation/off", [](OSCMessage &msg) {
+        installation.turnOff();
     });
 
     msg.dispatch("/til/wave", [](OSCMessage &msg) {
         waveScene.startWave();
     });
+
+    msg.dispatch("/til/wave", [](OSCMessage &msg) {
+        waveScene.startWave();
+    });
+
+    msg.dispatch("/til/refresh", [](OSCMessage &msg) {
+        sendRefresh();
+    });
+}
+
+void sendRefresh() {
+    osc.send("/til/brightness/min", installation.getMinBrightness());
+    osc.send("/til/brightness/max", installation.getMaxBrightness());
+    osc.send("/til/scenemanager/on", sceneController.isRunning());
 }
