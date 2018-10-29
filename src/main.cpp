@@ -144,11 +144,11 @@ void changeScene(BaseScene *scene) {
 void handleOsc(OSCMessage &msg) {
     // global
     msg.dispatch("/til/brightness/min", [](OSCMessage &msg) {
-        installation.setMinBrightness(msg.getFloat(0));
+        installation.getSettings()->setMinBrightness(msg.getFloat(0));
     });
 
     msg.dispatch("/til/brightness/max", [](OSCMessage &msg) {
-        installation.setMaxBrightness(msg.getFloat(0));
+        installation.getSettings()->setMaxBrightness(msg.getFloat(0));
     });
 
     msg.dispatch("/til/scenemanager/on", [](OSCMessage &msg) {
@@ -157,40 +157,42 @@ void handleOsc(OSCMessage &msg) {
 
     // time star
     msg.dispatch("/til/timestar/brightness/min", [](OSCMessage &msg) {
-        installation.setTimeStarMinBrightness(msg.getFloat(0));
+        installation.getSettings()->setTimeStarMinBrightness(msg.getFloat(0));
     });
 
     msg.dispatch("/til/timestar/brightness/max", [](OSCMessage &msg) {
-        installation.setTimeStarMaxBrightness(msg.getFloat(0));
+        installation.getSettings()->setTimeStarMaxBrightness(msg.getFloat(0));
     });
 
     msg.dispatch("/til/timestar/randomFactor", [](OSCMessage &msg) {
-        installation.setTimeStarRandomOnFactor(msg.getFloat(0));
+        installation.getSettings()->setTimeStarRandomOnFactor(msg.getFloat(0));
     });
 
     msg.dispatch("/til/timestar/duration/min", [](OSCMessage &msg) {
-        installation.setTimeStarMinDuration(MathUtils::secondsToMillis(static_cast<unsigned long>(msg.getFloat(0))));
+        installation.getSettings()->setTimeStarMinDuration(
+                MathUtils::secondsToMillis(static_cast<unsigned long>(msg.getFloat(0))));
     });
 
     msg.dispatch("/til/timestar/duration/max", [](OSCMessage &msg) {
-        installation.setTimeStarMaxDuration(MathUtils::secondsToMillis(static_cast<unsigned long>(msg.getFloat(0))));
+        installation.getSettings()->setTimeStarMaxDuration(
+                MathUtils::secondsToMillis(static_cast<unsigned long>(msg.getFloat(0))));
     });
 
     // wave
     msg.dispatch("/til/wave/brightness/min", [](OSCMessage &msg) {
-        installation.setWaveMinBrightness(msg.getFloat(0));
+        installation.getSettings()->setWaveMinBrightness(msg.getFloat(0));
     });
 
     msg.dispatch("/til/wave/brightness/max", [](OSCMessage &msg) {
-        installation.setWaveMaxBrightness(msg.getFloat(0));
+        installation.getSettings()->setWaveMaxBrightness(msg.getFloat(0));
     });
 
     msg.dispatch("/til/wave/duration", [](OSCMessage &msg) {
-        installation.setWaveDuration(msg.getFloat(0));
+        installation.getSettings()->setWaveDuration(msg.getFloat(0));
     });
 
     msg.dispatch("/til/wave/travelspeed", [](OSCMessage &msg) {
-        installation.setWaveTravelSpeed(msg.getFloat(0));
+        installation.getSettings()->setWaveTravelSpeed(msg.getFloat(0));
     });
 
     // controls
@@ -229,22 +231,22 @@ void handleOsc(OSCMessage &msg) {
 
 void sendRefresh() {
     // global
-    osc.send("/til/brightness/min", installation.getMinBrightness());
-    osc.send("/til/brightness/max", installation.getMaxBrightness());
+    osc.send("/til/brightness/min", installation.getSettings()->getMinBrightness());
+    osc.send("/til/brightness/max", installation.getSettings()->getMaxBrightness());
     osc.send("/til/scenemanager/on", sceneController.isRunning());
 
     // time star
-    osc.send("/til/timestar/brightness/min", installation.getTimeStarMinBrightness());
-    osc.send("/til/timestar/brightness/max", installation.getTimeStarMaxBrightness());
-    osc.send("/til/timestar/randomFactor", installation.getTimeStarRandomOnFactor());
+    osc.send("/til/timestar/brightness/min", installation.getSettings()->getTimeStarMinBrightness());
+    osc.send("/til/timestar/brightness/max", installation.getSettings()->getTimeStarMaxBrightness());
+    osc.send("/til/timestar/randomFactor", installation.getSettings()->getTimeStarRandomOnFactor());
     osc.send("/til/timestar/duration/min",
-             static_cast<float>(MathUtils::millisToSeconds(installation.getTimeStarMinDuration())));
+             static_cast<float>(MathUtils::millisToSeconds(installation.getSettings()->getTimeStarMinDuration())));
     osc.send("/til/timestar/duration/max",
-             static_cast<float>(MathUtils::millisToSeconds(installation.getTimeStarMaxDuration())));
+             static_cast<float>(MathUtils::millisToSeconds(installation.getSettings()->getTimeStarMaxDuration())));
 
     // wave
-    osc.send("/til/wave/brightness/min", installation.getWaveMinBrightness());
-    osc.send("/til/wave/brightness/max", installation.getWaveMaxBrightness());
-    osc.send("/til/wave/duration", static_cast<float>(installation.getWaveDuration()));
-    osc.send("/til/wave/travelspeed", static_cast<float>(installation.getWaveTravelSpeed()));
+    osc.send("/til/wave/brightness/min", installation.getSettings()->getWaveMinBrightness());
+    osc.send("/til/wave/brightness/max", installation.getSettings()->getWaveMaxBrightness());
+    osc.send("/til/wave/duration", static_cast<float>(installation.getSettings()->getWaveDuration()));
+    osc.send("/til/wave/travelspeed", static_cast<float>(installation.getSettings()->getWaveTravelSpeed()));
 }

@@ -29,5 +29,6 @@ void LightRenderer::render(LuboidPtr luboid) {
 float LightRenderer::mapToGlobalBrightnessRange(float value) {
     return MathUtils::map(value,
                           LUBOID_MIN_BRIGHTNESS, LUBOID_MAX_BRIGHTNESS,
-                          installation->getMinBrightness(), installation->getMaxBrightness());
+                          installation->getSettings()->getMinBrightness(),
+                          installation->getSettings()->getMaxBrightness());
 }
