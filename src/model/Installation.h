@@ -7,7 +7,8 @@
 #include "EEPROM.h"
 #include "AppSettings.h"
 
-#define EEPROM_START_ADDRESS 0x20
+#define EEPROM_SIZE 0xFF
+#define EEPROM_START_ADDRESS 0x00
 
 typedef Luboid *LuboidPtr;
 

@@ -7,7 +7,7 @@
 
 #define TIL_SETTINGS_VERSION 1000
 
-class AppSettings {
+struct AppSettings {
 private:
     int version = TIL_SETTINGS_VERSION;
 

@@ -47,19 +47,38 @@ void Installation::turnOff() {
 }
 
 void Installation::loadFromEEPROM() {
+    if (!EEPROM.begin(EEPROM_SIZE)) {
+        Serial.println("failed to initialise EEPROM");
+        return;
+    }
+
     // set start address
     int address = EEPROM_START_ADDRESS;
     EEPROM.get(address, *settings);
 
+    Serial.printf("Loaded Version: %d\n", settings->getVersion());
+
     // check version and set default if needed
-    if (settings->getVersion() != TIL_SETTINGS_VERSION)
+    if (settings->getVersion() != TIL_SETTINGS_VERSION) {
+        Serial.println("applying default app settings!");
         settings = new AppSettings();
+    }
+
+    EEPROM.end();
 }
 
 void Installation::saveToEEPROM() {
+    if (!EEPROM.begin(EEPROM_SIZE)) {
+        Serial.println("failed to initialise EEPROM");
+        return;
+    }
+
     // set start address
     int address = EEPROM_START_ADDRESS;
-    EEPROM.put(address, &settings);
+    EEPROM.put(address, settings);
+
+    EEPROM.commit();
+    EEPROM.end();
 }
 
 AppSettings *Installation::getSettings() const {
