@@ -61,7 +61,7 @@ void Installation::loadFromEEPROM() {
     // check version and set default if needed
     if (settings.getVersion() != TIL_SETTINGS_VERSION) {
         Serial.println("applying default app settings!");
-        settings = AppSettings();
+        loadDefaultSettings();
     }
 
     EEPROM.end();
@@ -83,4 +83,8 @@ void Installation::saveToEEPROM() {
 
 AppSettings &Installation::getSettings() {
     return settings;
+}
+
+void Installation::loadDefaultSettings() {
+    settings = AppSettings();
 }

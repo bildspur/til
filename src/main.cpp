@@ -216,17 +216,21 @@ void handleOsc(OSCMessage &msg) {
 
     msg.dispatch("/til/refresh", [](OSCMessage &msg) {
         sendRefresh();
-        osc.send("/til/status", "Status: refreshed!");
     });
 
     msg.dispatch("/til/settings/load", [](OSCMessage &msg) {
         installation.loadFromEEPROM();
-        osc.send("/til/status", "Status: loaded!");
+        osc.send("/til/status", "Status: loaded");
     });
 
     msg.dispatch("/til/settings/save", [](OSCMessage &msg) {
         installation.saveToEEPROM();
-        osc.send("/til/status", "Status: saved!");
+        osc.send("/til/status", "Status: saved");
+    });
+
+    msg.dispatch("/til/settings/default", [](OSCMessage &msg) {
+        installation.loadDefaultSettings();
+        osc.send("/til/status", "Status: default");
     });
 
     sendRefresh();

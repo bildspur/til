@@ -5,7 +5,7 @@
 #ifndef TIL_APPSETTINGS_H
 #define TIL_APPSETTINGS_H
 
-#define TIL_SETTINGS_VERSION 1000
+#define TIL_SETTINGS_VERSION 1001
 
 struct AppSettings {
 private:
@@ -19,13 +19,13 @@ private:
     // time star scene settings
     unsigned long timeStarMinDuration = 3000L;
 
-    unsigned long timeStarMaxDuration = 5000;
+    unsigned long timeStarMaxDuration = 5000L;
 
     float timeStarRandomOnFactor = 0.99f;
 
     float timeStarMinBrightness = 0.0f;
 
-    float timeStarMaxBrightness = 0.70f;
+    float timeStarMaxBrightness = 0.7f;
 
     // wave settings
     unsigned long waveDuration = 500L;

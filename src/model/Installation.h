@@ -37,6 +37,8 @@ public:
 
     void saveToEEPROM();
 
+    void loadDefaultSettings();
+
     void turnOn();
 
     void turnOff();
