@@ -155,6 +155,10 @@ void handleOsc(OSCMessage &msg) {
         sceneController.setRunning(!sceneController.isRunning());
     });
 
+    msg.dispatch("/til/sensor/on", [](OSCMessage &msg) {
+        motionSensor->setRunning(!motionSensor->isRunning());
+    });
+
     // time star
     msg.dispatch("/til/timestar/brightness/min", [](OSCMessage &msg) {
         installation.getSettings().setTimeStarMinBrightness(msg.getFloat(0));
@@ -197,15 +201,13 @@ void handleOsc(OSCMessage &msg) {
 
     // controls
     msg.dispatch("/til/installation/on", [](OSCMessage &msg) {
+        sceneController.setRunning(false);
         installation.turnOn();
     });
 
     msg.dispatch("/til/installation/off", [](OSCMessage &msg) {
+        sceneController.setRunning(false);
         installation.turnOff();
-    });
-
-    msg.dispatch("/til/wave", [](OSCMessage &msg) {
-        waveScene.startWave();
     });
 
     msg.dispatch("/til/wave", [](OSCMessage &msg) {
@@ -214,6 +216,7 @@ void handleOsc(OSCMessage &msg) {
 
     msg.dispatch("/til/refresh", [](OSCMessage &msg) {
         sendRefresh();
+        osc.send("/til/status", "Status: refreshed!");
     });
 
     msg.dispatch("/til/settings/load", [](OSCMessage &msg) {
@@ -234,6 +237,7 @@ void sendRefresh() {
     osc.send("/til/brightness/min", installation.getSettings().getMinBrightness());
     osc.send("/til/brightness/max", installation.getSettings().getMaxBrightness());
     osc.send("/til/scenemanager/on", sceneController.isRunning());
+    osc.send("/til/sensor/on", motionSensor->isRunning());
 
     // time star
     osc.send("/til/timestar/brightness/min", installation.getSettings().getTimeStarMinBrightness());

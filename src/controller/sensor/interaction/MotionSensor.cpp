@@ -17,7 +17,8 @@ void MotionSensor::loop() {
 
     // read value
     if (timer->elapsed()) {
-        measure();
+        if (running)
+            measure();
     }
 }
 
@@ -33,4 +34,12 @@ bool MotionSensor::isMotionDetected(bool clearFlag) {
 
 void MotionSensor::measure() {
 
+}
+
+bool MotionSensor::isRunning() const {
+    return running;
+}
+
+void MotionSensor::setRunning(bool running) {
+    MotionSensor::running = running;
 }

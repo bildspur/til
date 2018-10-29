@@ -18,6 +18,8 @@ protected:
 
     bool motionDetected = false;
 
+    bool running = true;
+
     Timer *timer;
 
 public:
@@ -28,6 +30,10 @@ public:
     virtual void measure();
 
     virtual bool isMotionDetected(bool clearFlag = false);
+
+    bool isRunning() const;
+
+    void setRunning(bool running);
 };
 
 #endif //TIL_MOTIONSENSOR_H
