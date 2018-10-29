@@ -12,29 +12,29 @@ private:
     int version = TIL_SETTINGS_VERSION;
 
     // global settings
-    float minBrightness = 0.0f;
+    float minBrightness = 0.15f;
 
-    float maxBrightness = 1.0f;
+    float maxBrightness = 0.5f;
 
     // time star scene settings
-    unsigned long timeStarMinDuration = 10000L;
+    unsigned long timeStarMinDuration = 3000L;
 
-    unsigned long timeStarMaxDuration = 50000L;
+    unsigned long timeStarMaxDuration = 5000;
 
     float timeStarRandomOnFactor = 0.99f;
 
     float timeStarMinBrightness = 0.0f;
 
-    float timeStarMaxBrightness = 0.2f;
+    float timeStarMaxBrightness = 0.70f;
 
     // wave settings
-    unsigned long waveDuration = 3000L;
+    unsigned long waveDuration = 500L;
 
-    unsigned long waveTravelSpeed = 500L;
+    unsigned long waveTravelSpeed = 135L;
 
     float waveMinBrightness = 0.0f;
 
-    float waveMaxBrightness = 0.2f;
+    float waveMaxBrightness = 1.0f;
 
 public:
     int getVersion() const;
