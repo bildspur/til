@@ -18,7 +18,7 @@ private:
 
     uint16_t size;
 
-    AppSettings *settings;
+    AppSettings settings;
 
 public:
     Installation(uint16_t size, LuboidPtr *luboids);
@@ -41,7 +41,7 @@ public:
 
     void turnOff();
 
-    AppSettings *getSettings() const;
+    AppSettings &getSettings();
 };
 
 

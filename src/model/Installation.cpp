@@ -8,7 +8,7 @@
 Installation::Installation(uint16_t size, LuboidPtr *luboids) {
     this->size = size;
     this->lubiods = luboids;
-    this->settings = new AppSettings();
+    this->settings = AppSettings();
 }
 
 uint16_t Installation::getSize() {
@@ -54,14 +54,14 @@ void Installation::loadFromEEPROM() {
 
     // set start address
     int address = EEPROM_START_ADDRESS;
-    EEPROM.get(address, *settings);
+    EEPROM.get(address, settings);
 
-    Serial.printf("Loaded Version: %d\n", settings->getVersion());
+    Serial.printf("Loaded Version: %d\n", settings.getVersion());
 
     // check version and set default if needed
-    if (settings->getVersion() != TIL_SETTINGS_VERSION) {
+    if (settings.getVersion() != TIL_SETTINGS_VERSION) {
         Serial.println("applying default app settings!");
-        settings = new AppSettings();
+        settings = AppSettings();
     }
 
     EEPROM.end();
@@ -81,6 +81,6 @@ void Installation::saveToEEPROM() {
     EEPROM.end();
 }
 
-AppSettings *Installation::getSettings() const {
+AppSettings &Installation::getSettings() {
     return settings;
 }

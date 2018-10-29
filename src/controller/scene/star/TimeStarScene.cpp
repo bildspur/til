@@ -32,17 +32,17 @@ void TimeStarScene::loop() {
     for (auto i = 0; i < starCount; i++) {
         auto star = stars[i];
         if (!star->isRunning(timeStamp) &&
-            MathUtils::isRandomCalled(installation->getSettings()->getTimeStarRandomOnFactor())) {
+            MathUtils::isRandomCalled(installation->getSettings().getTimeStarRandomOnFactor())) {
             star->start(timeStamp, (unsigned long) lround(
-                    random(installation->getSettings()->getTimeStarMinDuration(),
-                           random(installation->getSettings()->getTimeStarMaxDuration()))));
+                    random(installation->getSettings().getTimeStarMinDuration(),
+                           random(installation->getSettings().getTimeStarMaxDuration()))));
         }
 
         // update
         float brightness = star->getBrightness(timeStamp);
         float clampedBrightness = MathUtils::mapFromLEDBrightness(brightness,
-                                                                  installation->getSettings()->getTimeStarMinBrightness(),
-                                                                  installation->getSettings()->getTimeStarMaxBrightness());
+                                                                  installation->getSettings().getTimeStarMinBrightness(),
+                                                                  installation->getSettings().getTimeStarMaxBrightness());
         installation->getLuboid(i)->setBrightness(clampedBrightness);
     }
 }

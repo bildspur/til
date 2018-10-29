@@ -52,13 +52,13 @@ void WaveScene::loop() {
 
 bool WaveScene::updateLuboid(LuboidPtr luboid, unsigned long timeDiff) {
     // do nothing till nmt relevant
-    auto ldiff = timeDiff - (luboid->getId() * installation->getSettings()->getWaveTravelSpeed());
+    auto ldiff = timeDiff - (luboid->getId() * installation->getSettings().getWaveTravelSpeed());
 
     // wave relevant but not yet
     if (ldiff < 0L)
         return true;
 
-    float x = ldiff / (float) installation->getSettings()->getWaveDuration();
+    float x = ldiff / (float) installation->getSettings().getWaveDuration();
 
     // wave not relevant anymore
     if (x > 1.0f)
@@ -66,8 +66,8 @@ bool WaveScene::updateLuboid(LuboidPtr luboid, unsigned long timeDiff) {
 
     // get brightness and update
     float brightness = MathUtils::windowedSine(x);
-    float clamped = MathUtils::mapFromLEDBrightness(brightness, installation->getSettings()->getWaveMinBrightness(),
-                                                    installation->getSettings()->getWaveMaxBrightness());
+    float clamped = MathUtils::mapFromLEDBrightness(brightness, installation->getSettings().getWaveMinBrightness(),
+                                                    installation->getSettings().getWaveMaxBrightness());
     luboid->setBrightness(clamped);
     return true;
 }
