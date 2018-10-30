@@ -82,7 +82,7 @@ BaseControllerPtr controllers[] = {
         &network,
         &ota,
         &osc,
-        //debugRenderer,
+        debugRenderer,
         renderer,
         motionSensor,
         &sceneController,
