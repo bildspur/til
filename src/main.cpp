@@ -242,6 +242,7 @@ void sendRefresh() {
     osc.send("/til/brightness/max", installation.getSettings().getMaxBrightness());
     osc.send("/til/scenemanager/on", sceneController.isRunning());
     osc.send("/til/sensor/on", motionSensor->isRunning());
+    osc.send("/til/version", installation.getSettings().getVersion());
 
     // time star
     osc.send("/til/timestar/brightness/min", installation.getSettings().getTimeStarMinBrightness());
