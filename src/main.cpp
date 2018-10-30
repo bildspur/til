@@ -82,7 +82,7 @@ BaseControllerPtr controllers[] = {
         &network,
         &ota,
         &osc,
-        debugRenderer,
+        //debugRenderer,
         renderer,
         motionSensor,
         &sceneController,
@@ -192,11 +192,11 @@ void handleOsc(OSCMessage &msg) {
     });
 
     msg.dispatch("/til/wave/duration", [](OSCMessage &msg) {
-        installation.getSettings().setWaveDuration(msg.getFloat(0));
+        installation.getSettings().setWaveDuration(static_cast<unsigned long>(msg.getFloat(0)));
     });
 
     msg.dispatch("/til/wave/travelspeed", [](OSCMessage &msg) {
-        installation.getSettings().setWaveTravelSpeed(msg.getFloat(0));
+        installation.getSettings().setWaveTravelSpeed(static_cast<unsigned long>(msg.getFloat(0)));
     });
 
     // controls
