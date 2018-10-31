@@ -46,3 +46,7 @@ void TimeStarScene::loop() {
         installation->getLuboid(i)->setBrightness(clampedBrightness);
     }
 }
+
+void TimeStarScene::resetStar(int id) {
+    stars[id]->reset();
+}

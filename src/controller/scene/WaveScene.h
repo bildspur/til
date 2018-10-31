@@ -8,11 +8,14 @@
 
 #include "BaseScene.h"
 #include "../sensor/interaction/MotionSensor.h"
+#include "star/TimeStarScene.h"
 
 #define MAX_WAVES 10
 
 class WaveScene : public BaseScene {
 private:
+    TimeStarScene *starScene;
+
     MotionSensor *motionSensor;
 
     unsigned long waves[MAX_WAVES];
@@ -21,7 +24,7 @@ private:
     bool updateLuboid(LuboidPtr luboid, unsigned long timeDiff);
 
 public:
-    explicit WaveScene(Installation *installation, MotionSensor *motionSensor);
+    explicit WaveScene(Installation *installation, MotionSensor *motionSensor, TimeStarScene *starScene);
 
     void setup() override;
 

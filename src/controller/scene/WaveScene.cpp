@@ -6,17 +6,19 @@
 #include "../../util/MathUtils.h"
 
 WaveScene::WaveScene(Installation *installation,
-                     MotionSensor *motionSensor) : BaseScene("WaveScene",
-                                                             installation) {
-    this->motionSensor = motionSensor;;
+                     MotionSensor *motionSensor,
+                     TimeStarScene *starScene) : BaseScene("WaveScene",
+                                                           installation) {
+    this->motionSensor = motionSensor;
+    this->starScene = starScene;
 }
 
 void WaveScene::setup() {
     BaseScene::setup();
 
     // reset waves
-    for (unsigned long &wave : this->waves) {
-        wave = 0L;
+    for (unsigned long &wave : waves) {
+        wave = 0UL;
     }
 }
 
@@ -27,10 +29,12 @@ void WaveScene::loop() {
     pollNewWave();
 
     // update current waves
-    for (auto waveStart : waves) {
+    for (unsigned long &waveStart : this->waves) {
         // check if is relevant
         if (waveStart == 0)
             continue;
+
+        Serial.printf("wave relevant: %d\n", &waveStart);
 
         // calculate timediff
         auto timeDiff = millis() - waveStart;
@@ -46,7 +50,7 @@ void WaveScene::loop() {
 
         // stop wave if necessary
         if (!waveIsRelevant)
-            waveStart = 0;
+            waveStart = 0UL;
     }
 }
 
@@ -61,8 +65,15 @@ bool WaveScene::updateLuboid(LuboidPtr luboid, unsigned long timeDiff) {
     float x = ldiff / (float) installation->getSettings().getWaveDuration();
 
     // wave not relevant anymore
-    if (x > 1.0f)
+    if (x > 1.0f) {
+        // todo: fix nicer
+        if (x < 1.1f) {
+            // reset star sine
+            Serial.printf("reseting star %d\n", luboid->getId());
+            starScene->resetStar(luboid->getId());
+        }
         return false;
+    }
 
     // get brightness and update
     float brightness = MathUtils::windowedSine(x);

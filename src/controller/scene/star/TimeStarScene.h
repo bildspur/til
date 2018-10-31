@@ -23,6 +23,8 @@ public:
     void setup() override;
 
     void loop() override;
+
+    void resetStar(int id);
 };
 
 

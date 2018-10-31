@@ -18,6 +18,8 @@ public:
     void start(unsigned long timeStamp, unsigned long duration);
 
     float getBrightness(unsigned long timeStamp);
+
+    void reset();
 };
 
 

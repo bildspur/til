@@ -73,7 +73,7 @@ MotionSensor *motionSensor = new SerialMotionSensor(MOTION_RX_PIN, MOTION_BAUD_R
 // scenes
 //StarScene starScene = StarScene(&installation);
 TimeStarScene timeStarScene = TimeStarScene(&installation);
-WaveScene waveScene = WaveScene(&installation, motionSensor);
+WaveScene waveScene = WaveScene(&installation, motionSensor, &timeStarScene);
 
 auto sceneController = SceneController(&timeStarScene);
 
@@ -82,7 +82,7 @@ BaseControllerPtr controllers[] = {
         &network,
         &ota,
         &osc,
-        //debugRenderer,
+        debugRenderer,
         renderer,
         motionSensor,
         &sceneController,

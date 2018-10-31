@@ -2,6 +2,7 @@
 // Created by Florian Bruggisser on 25.10.18.
 //
 
+#include <esp32-hal.h>
 #include "TimeStar.h"
 #include "../../../util/MathUtils.h"
 
@@ -22,6 +23,11 @@ float TimeStar::getBrightness(unsigned long timeStamp) {
     // calculate normalized time
     auto nvalue = (timeStamp - startTime) / (float) duration;
     return MathUtils::windowedSine(nvalue);
+}
+
+void TimeStar::reset() {
+    this->startTime = 0;
+    this->duration = 0;
 }
 
 
