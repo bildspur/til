@@ -22,7 +22,7 @@ void setup() {
 
   Serial.println("starting...");
 
-  dmx.init(512, 2);           // initialization for complete bus
+  dmx.init(512, 25);           // initialization for complete bus
 
   Serial.println("initialized...");
   delay(200);               // wait a while (not necessary)
@@ -45,14 +45,14 @@ void writeController(int channel, int value)
 void loop() {
   // turn slowly on
 
-  //fadeDmx(true, 5);
+  fadeDmx(true, 5);
 
-  //delay(500);
+  delay(500);
 
   // turn slowly off
-  //fadeDmx(false, 5);
+  fadeDmx(false, 5);
 
-  //delay(1000);
+  delay(1000);
 
   setDmx(0);
   delay(5);
